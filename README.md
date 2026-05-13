@@ -7,7 +7,7 @@ Esta aplicación estará enfocada en usuarios que deseen analizar el rendimiento
 La aplicación permitirá al usuario seleccionar una “uma” (personaje), las cuales estarán clasificadas según distintos criterios como el tipo de terreno (tierra o pasto) y el estilo de carrera (como corredor delantero o tardío).
 
 Cada uma contará con un conjunto de estadísticas principales, siendo estas velocidad, poder, inteligencia y estamina. Cada una de estas variables influirá directamente en el desempeño durante la carrera, cumpliendo un rol específico en el desarrollo de la simulación.
-### Mecánicas y características
+## Mecánicas y características
 Además de las estadísticas base, la aplicación integrará un sistema de habilidades, las cuales podrán ser de distintos tipos, como:  
 •	Recuperación de estamina  
 •	Incremento de velocidad  
