@@ -1,5 +1,5 @@
 [project]
-name = "derby:planer"
+name = "derby_planer"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
