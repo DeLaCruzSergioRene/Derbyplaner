@@ -1,0 +1,7 @@
+-Crear la carpeta src en la raiz o no jala nada.
+-Colocar lo de abajo en el .env para que no truene la base de datos.
+
+"DB_HOST" = localhost
+"DB_USER" = root
+"DB_PASSWORD" =
+"DB_NAME" = derby_planer
