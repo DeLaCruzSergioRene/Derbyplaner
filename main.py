@@ -15,7 +15,7 @@ def main(pagina: ft.Page):
                     ft.Text(f"ID: {usuario['id']}", size=14),
                     ft.Text(f"Nombre: {usuario['nombre']}", size=14),
                     ft.Text(f"Correo: {usuario['email']}", size=14),
-                    ft.ElevatedButton("Cerrar Sesión", on_click=lambda e: mostrar_menu(), width=300)
+                    ft.Button("Cerrar Sesión", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
                 alignment=ft.alignment.Alignment(0, 0),
@@ -29,8 +29,8 @@ def main(pagina: ft.Page):
             ft.Container(
                 content=ft.Column([
                     ft.Text("Derby Planer", size=32, weight="bold"),
-                    ft.ElevatedButton("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
-                    ft.ElevatedButton("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion())
+                    ft.Button("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
+                    ft.Button("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion())
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
                 alignment=ft.alignment.Alignment(0, 0),
@@ -44,7 +44,7 @@ def main(pagina: ft.Page):
             ft.Container(
                 content=ft.Column([
                     vista_registro(pagina, al_iniciar_sesion),
-                    ft.ElevatedButton("Volver", on_click=lambda e: mostrar_menu(), width=300)
+                    ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
                 alignment=ft.alignment.Alignment(0, 0),
@@ -58,15 +58,13 @@ def main(pagina: ft.Page):
             ft.Container(
                 content=ft.Column([
                     vista_sesion(pagina, al_iniciar_sesion),
-                    ft.ElevatedButton("Volver", on_click=lambda e: mostrar_menu(), width=300)
+                    ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
                 alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
         )
-    
     mostrar_menu()
 
-if __name__ == "__main__":
-    ft.app(target=main)
+ft.run(main)
