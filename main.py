@@ -2,7 +2,7 @@ import flet as ft
 from views.Registro import vista_registro
 from views.Sesion import vista_sesion
 
-def principal(pagina: ft.Page):
+def main(pagina: ft.Page):
     pagina.title = "Derby Planer"
     pagina.window_width = 400
     pagina.window_height = 500
@@ -69,4 +69,4 @@ def principal(pagina: ft.Page):
     mostrar_menu()
 
 if __name__ == "__main__":
-    ft.app(target=principal)
+    ft.app(target=main)
