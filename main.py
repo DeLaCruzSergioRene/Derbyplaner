@@ -12,12 +12,13 @@ def principal(pagina: ft.Page):
         pagina.add(
             ft.Container(
                 content=ft.Column([
-                    ft.Text(f"ID Usuario: {usuario['id']}", size=14),
-                    ft.Text(f"Usuario: {usuario['usuario']}", size=14),
+                    ft.Text(f"ID: {usuario['id']}", size=14),
+                    ft.Text(f"Nombre: {usuario['nombre']}", size=14),
+                    ft.Text(f"Correo: {usuario['email']}", size=14),
                     ft.ElevatedButton("Cerrar Sesión", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
         )
@@ -32,7 +33,7 @@ def principal(pagina: ft.Page):
                     ft.ElevatedButton("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion())
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
         )
@@ -46,7 +47,7 @@ def principal(pagina: ft.Page):
                     ft.ElevatedButton("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
         )
@@ -60,7 +61,7 @@ def principal(pagina: ft.Page):
                     ft.ElevatedButton("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
-                alignment=ft.alignment.center,
+                alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
         )

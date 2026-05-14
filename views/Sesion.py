@@ -3,31 +3,31 @@ import bcrypt
 from database.db import BD
 
 def vista_sesion(pagina: ft.Page, al_exito):
-    campo_usuario = ft.TextField(label="Usuario", width=300)
+    campo_email = ft.TextField(label="Correo", width=300)
     campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
     mensaje = ft.Text("", color="red")
     
     def iniciar_sesion(e):
-        usuario = campo_usuario.value.strip()
+        email = campo_email.value.strip()
         contraseña = campo_contraseña.value.strip()
         
-        if not usuario or not contraseña:
+        if not email or not contraseña:
             mensaje.value = "Completa todos los campos"
             pagina.update()
             return
         
         try:
             bd = BD()
-            usuario_bd = bd.obtener_uno("SELECT * FROM usuarios WHERE usuario = %s", (usuario,))
+            usuario_bd = bd.obtener_uno("SELECT * FROM usuarios WHERE email = %s", (email,))
             bd.cerrar()
             
             if not usuario_bd:
-                mensaje.value = "✗ Usuario no encontrado"
+                mensaje.value = "✗ Correo no encontrado"
                 pagina.update()
                 return
             
             if bcrypt.checkpw(contraseña.encode(), usuario_bd['password'].encode()):
-                mensaje.value = f"✓ Bienvenido {usuario}"
+                mensaje.value = f"✓ Bienvenido {usuario_bd['nombre']}"
                 mensaje.color = "green"
                 pagina.update()
                 al_exito(usuario_bd)
@@ -41,11 +41,11 @@ def vista_sesion(pagina: ft.Page, al_exito):
     return ft.Container(
         content=ft.Column([
             ft.Text("INICIAR SESIÓN", size=24, weight="bold"),
-            campo_usuario,
+            campo_email,
             campo_contraseña,
             ft.ElevatedButton("Entrar", on_click=iniciar_sesion, width=300),
             mensaje
         ], spacing=15, horizontal_alignment="center"),
         padding=30,
-        alignment=ft.alignment.center
+        alignment=ft.alignment.Alignment(0, 0)
     )
