@@ -6,4 +6,4 @@
 "DB_PASSWORD" =
 "DB_NAME" = derby_planer
 
-Base de datos lista.
+Base de datos lista por ahora.
