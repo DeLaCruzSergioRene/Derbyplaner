@@ -22,7 +22,7 @@ def vista_registro(pagina: ft.Page, al_exito):
             bd = BD()
             hashed = bcrypt.hashpw(contraseña.encode(), bcrypt.gensalt()).decode()
             bd.ejecutar("INSERT INTO usuarios (nombre, email, password) VALUES (%s, %s, %s)", 
-                      (nombre, email, hashed))
+                (nombre, email, hashed))
             bd.cerrar()
             mensaje.value = "✓ Registrado exitosamente"
             mensaje.color = "green"
