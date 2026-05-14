@@ -43,7 +43,7 @@ def vista_sesion(pagina: ft.Page, al_exito):
             ft.Text("INICIAR SESIÓN", size=24, weight="bold"),
             campo_email,
             campo_contraseña,
-            ft.ElevatedButton("Entrar", on_click=iniciar_sesion, width=300),
+            ft.Button("Entrar", on_click=iniciar_sesion, width=300),
             mensaje
         ], spacing=15, horizontal_alignment="center"),
         padding=30,

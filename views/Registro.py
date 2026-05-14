@@ -40,7 +40,7 @@ def vista_registro(pagina: ft.Page, al_exito):
             campo_nombre,
             campo_email,
             campo_contraseña,
-            ft.ElevatedButton("Registrarse", on_click=registrar, width=300),
+            ft.Button("Registrarse", on_click=registrar, width=300),
             mensaje
         ], spacing=15, horizontal_alignment="center"),
         padding=30,
