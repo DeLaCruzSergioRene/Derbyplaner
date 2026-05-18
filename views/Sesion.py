@@ -2,7 +2,7 @@ import flet as ft
 import bcrypt
 from database.db import BD
 
-def vista_sesion(pagina: ft.Page, al_exito):
+def vista_sesion(page: ft.Page, al_exito):
     campo_email = ft.TextField(label="Correo", width=300)
     campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
     mensaje = ft.Text("", color="red")
@@ -13,7 +13,7 @@ def vista_sesion(pagina: ft.Page, al_exito):
         
         if not email or not contraseña:
             mensaje.value = "Completa todos los campos"
-            pagina.update()
+            page.update()
             return
         
         try:
@@ -23,20 +23,20 @@ def vista_sesion(pagina: ft.Page, al_exito):
             
             if not usuario_bd:
                 mensaje.value = "✗ Correo no encontrado"
-                pagina.update()
+                page.update()
                 return
             
             if bcrypt.checkpw(contraseña.encode(), usuario_bd['password'].encode()):
                 mensaje.value = f"✓ Bienvenido {usuario_bd['nombre']}"
                 mensaje.color = "green"
-                pagina.update()
+                page.update()
                 al_exito(usuario_bd)
             else:
                 mensaje.value = "✗ Contraseña incorrecta"
-                pagina.update()
+                page.update()
         except Exception as ex:
             mensaje.value = f"✗ Error: {str(ex)[:40]}"
-            pagina.update()
+            page.update()
     
     return ft.Container(
         content=ft.Column([
