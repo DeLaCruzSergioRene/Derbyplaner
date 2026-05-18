@@ -62,7 +62,7 @@ def main(pagina: ft.Page):
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
                 alignment=ft.alignment.Alignment(0, 0),
-                expand=True
+                expand=True 
             )
         )
     mostrar_menu()
