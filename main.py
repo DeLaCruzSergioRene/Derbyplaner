@@ -2,14 +2,14 @@ import flet as ft
 from views.Registro import vista_registro
 from views.Sesion import vista_sesion
 
-def main(pagina: ft.Page):
-    pagina.title = "Derby Planer"
-    pagina.window_width = 400
-    pagina.window_height = 500
+def main(page: ft.Page):
+    page.title = "Derby Planer"
+    page.window_width = 400
+    page.window_height = 500
     
     def al_iniciar_sesion(usuario):
-        pagina.clean()
-        pagina.add(
+        page.clean()
+        page.add(
             ft.Container(
                 content=ft.Column([
                     ft.Text(f"ID: {usuario['id']}", size=14),
@@ -24,8 +24,8 @@ def main(pagina: ft.Page):
         )
     
     def mostrar_menu():
-        pagina.clean()
-        pagina.add(
+        page.clean()
+        page.add(
             ft.Container(
                 content=ft.Column([
                     ft.Text("Derby Planer", size=32, weight="bold"),
@@ -39,11 +39,11 @@ def main(pagina: ft.Page):
         )
     
     def mostrar_registro():
-        pagina.clean()
-        pagina.add(
+        page.clean()
+        page.add(
             ft.Container(
                 content=ft.Column([
-                    vista_registro(pagina, al_iniciar_sesion),
+                    vista_registro(page, al_iniciar_sesion),
                     ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
@@ -53,11 +53,11 @@ def main(pagina: ft.Page):
         )
     
     def mostrar_sesion():
-        pagina.clean()
-        pagina.add(
+        page.clean()
+        page.add(
             ft.Container(
                 content=ft.Column([
-                    vista_sesion(pagina, al_iniciar_sesion),
+                    vista_sesion(page, al_iniciar_sesion),
                     ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300)
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,

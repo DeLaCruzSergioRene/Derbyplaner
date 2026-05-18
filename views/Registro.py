@@ -2,7 +2,7 @@ import flet as ft
 import bcrypt
 from database.db import BD
 
-def vista_registro(pagina: ft.Page, al_exito):
+def vista_registro(page: ft.Page, al_exito):
     campo_nombre = ft.TextField(label="Nombre", width=300)
     campo_email = ft.TextField(label="Correo", width=300)
     campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
@@ -15,7 +15,7 @@ def vista_registro(pagina: ft.Page, al_exito):
         
         if not nombre or not email or not contraseña:
             mensaje.value = "Completa todos los campos"
-            pagina.update()
+            page.update()
             return
         
         try:
@@ -29,10 +29,10 @@ def vista_registro(pagina: ft.Page, al_exito):
             campo_nombre.value = ""
             campo_email.value = ""
             campo_contraseña.value = ""
-            pagina.update()
+            page.update()
         except Exception as ex:
             mensaje.value = f"✗ {str(ex)[:40]}"
-            pagina.update()
+            page.update()
     
     return ft.Container(
         content=ft.Column([
