@@ -44,7 +44,7 @@ def vista_sesion(page: ft.Page, al_exito):
             campo_email,
             campo_contraseña,
             ft.Button("Entrar", on_click=iniciar_sesion, width=300),
-            mensaje
+            mensaje,
         ], spacing=15, horizontal_alignment="center"),
         padding=30,
         alignment=ft.alignment.Alignment(0, 0)

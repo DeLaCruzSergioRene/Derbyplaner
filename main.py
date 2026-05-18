@@ -1,6 +1,7 @@
 import flet as ft
 from views.Registro import vista_registro
 from views.Sesion import vista_sesion
+from views.Recuperar import recuperar
 
 def main(page: ft.Page):
     page.title = "Derby Planer"
@@ -58,7 +59,8 @@ def main(page: ft.Page):
             ft.Container(
                 content=ft.Column([
                     vista_sesion(page, al_iniciar_sesion),
-                    ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300)
+                    ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300),
+                    ft.Button("¿Haz olvidado la contraseña?")
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
                 alignment=ft.alignment.Alignment(0, 0),
