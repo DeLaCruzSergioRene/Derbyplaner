@@ -60,7 +60,7 @@ def main(page: ft.Page):
                 content=ft.Column([
                     vista_sesion(page, al_iniciar_sesion),
                     ft.Button("Volver", on_click=lambda e: mostrar_menu(), width=300),
-                    ft.TextButton("¿Haz olvidado la contraseña?", on_click=lambda e: (page.clean(), page.add(recuperar(page, mostrar_menu))))
+                    ft.TextButton("¿Haz olvidado la contraseña?", on_click=lambda e: recuperar(page, mostrar_menu))
                 ], spacing=15, horizontal_alignment="center"),
                 padding=10,
                 alignment=ft.alignment.Alignment(0, 0),
