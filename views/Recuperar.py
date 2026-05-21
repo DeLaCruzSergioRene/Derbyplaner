@@ -64,7 +64,7 @@ def recuperar(page: ft.Page, volver):
             content=ft.Column([
                 ft.Text("RECUPERAR CONTRASEÑA", size=24, weight="bold"),
                 campo_email,
-                ft.ElevatedButton("Enviar código", on_click=enviar, width=300),
+                ft.Button("Enviar código", on_click=enviar, width=300),
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), volver()))
             ], spacing=15, horizontal_alignment="center"),
@@ -106,7 +106,7 @@ def recuperar(page: ft.Page, volver):
                 ft.Text("Ingresa el código y nueva contraseña", size=16, weight="bold"),
                 campo_token,
                 campo_pass,
-                ft.ElevatedButton("Cambiar contraseña", on_click=cambiar, width=300),
+                ft.Button("Cambiar contraseña", on_click=cambiar, width=300),
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), mostrar_formulario_email()))
             ], spacing=15, horizontal_alignment="center"),
