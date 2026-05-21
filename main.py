@@ -1,4 +1,6 @@
 import flet as ft
+import dotenv 
+dotenv.load_dotenv()
 from views.Registro import vista_registro
 from views.Sesion import vista_sesion
 from views.Recuperar import recuperar
