@@ -1,6 +1,6 @@
 import flet as ft
 
-def juego(page: ft.Page, al_exito):
+def juego(page: ft.Page):
     page.navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="the"),

@@ -5,8 +5,10 @@ def menu(page: ft.Page, al_exito):
     page.navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Jugar"),
-            ft.NavigationBarDestination(icon=ft.Icons.COMMUTE, label="Usuario"),
-            ft.NavigationBarDestination(icon=ft.Icons.BOOKMARK_BORDER, label="Resultados"),
+            ft.NavigationBarDestination(icon=ft.Icons.COMMUTE, label="Historial"),
+            ft.NavigationBarDestination(
+                ft.Button("Perfil", width=300, on_click=lambda e: juego(page))
+                ),
         ]
     )
 
