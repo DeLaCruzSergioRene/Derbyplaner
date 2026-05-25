@@ -15,6 +15,15 @@ Además de las estadísticas base, la aplicación integrará un sistema de habil
 Durante cada simulación, estas habilidades se activarán en cierto tramo de la carrera, afectando el resultado de la carrera.  
 Finalmente, el sistema mostrará los resultados de la simulación, permitiendo al usuario observar el desempeño de su configuración y analizar qué combinaciones resultan más efectivas.
 
+Etapa 1:  
+Proposito del proyecto, diseño del diseño de las entidades de bases de datos.  
+Etapa 2:  
+Desarrollo del inicio de sesión.  
+Etapa 3:  
+Recuperación de contraseñas.  
+Etapa 4:  
+Interfaz grafica CRUD funcional
+
 #### Desarolladores
 
 1. De la Cruz Rodriguéz Sergio René
