@@ -24,7 +24,7 @@ Finalmente, el sistema mostrará los resultados de la simulación, permitiendo a
 <img width="200" height="200" alt="Sergio 200px" src="https://github.com/user-attachments/assets/c00058cc-d7eb-4fdb-bc40-2d9a136f2f49" />  
 
 2. Ortega Flores Daniel Benjamín
-- Edad: 17.
+- Edad: 18.
 - Especialidad: Programación.
 - Institución: [CETis61]
 <img width="200" height="200" alt="Benjamin 200px" src="https://github.com/user-attachments/assets/fef89bf1-c734-4d59-97d6-838e8fb6474e" />
