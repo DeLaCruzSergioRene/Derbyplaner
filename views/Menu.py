@@ -4,19 +4,15 @@ from views.Juego import juego
 def menu(page: ft.Page, al_exito):
     page.navigation_bar = ft.NavigationBar(
         destinations=[
-            ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Explore"),
-            ft.NavigationBarDestination(icon=ft.Icons.COMMUTE, label="Commute"),
-            ft.NavigationBarDestination(
-                icon=ft.Icons.BOOKMARK_BORDER,
-                selected_icon=ft.Icons.BOOKMARK,
-                label="Favorites",
-            ),
+            ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Jugar"),
+            ft.NavigationBarDestination(icon=ft.Icons.COMMUTE, label="Usuario"),
+            ft.NavigationBarDestination(icon=ft.Icons.BOOKMARK_BORDER, label="Resultados"),
         ]
     )
 
     page.add(
         ft.SafeArea(
-            content=ft.Text("Body!"),
+            content=ft.Text("Selecciona una opción"),
         )
     )
     #page.add(ft.Container(
