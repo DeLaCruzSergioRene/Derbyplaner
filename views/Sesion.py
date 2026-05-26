@@ -3,7 +3,7 @@ import bcrypt
 from database.db import BD
 
 def vista_sesion(page: ft.Page, al_exito):
-    campo_email = ft.TextField(label="Correo", width=300)
+    campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
     campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
     mensaje = ft.Text("", color="red")
     

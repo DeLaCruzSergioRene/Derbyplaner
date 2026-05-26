@@ -6,9 +6,7 @@ def menu(page: ft.Page, al_exito):
         destinations=[
             ft.NavigationBarDestination(icon=ft.Icons.EXPLORE, label="Jugar"),
             ft.NavigationBarDestination(icon=ft.Icons.COMMUTE, label="Historial"),
-            ft.NavigationBarDestination(
-                ft.Button("Perfil", width=300, on_click=lambda e: juego(page))
-                ),
+            ft.NavigationBarDestination(icon=ft.Icons.PERSON, label="Perfil"),
         ]
     )
 
