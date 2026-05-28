@@ -10,11 +10,19 @@ def menu(page: ft.Page, al_exito):
         ]
     )
 
-    page.add(
-        ft.SafeArea(
-            content=ft.Text("Selecciona una opción"),
-        )
-    )
+    #page.add(
+    #    ft.SafeArea(
+    #        content=ft.Text("Selecciona una opción"),
+    #    )
+    #)
+    page.add(ft.Image(
+        src="assets\img\dormitorio.jpg",
+        #width=200,
+        #height=200,
+        fit="cover",
+        border_radius=ft.BorderRadius.all(10),
+        repeat=ft.ImageRepeat.NO_REPEAT 
+    ))
     #page.add(ft.Container(
     #        content=ft.Column([
     #            ft.Text("eeeeeeeeeeeeeeeeeeeeee", size=16, weight="bold"),
