@@ -24,14 +24,11 @@ def main(page: ft.Page):
     #)
     
     def al_iniciar_sesion(usuario):
+        page.current_user = usuario
         page.clean()
         page.add(
             ft.Container(
                 content=ft.Column([
-                    #ft.Text(f"ID: {usuario['id']}", size=14),
-                    #ft.Text(f"Nombre: {usuario['nombre']}", size=14),
-                    #ft.Text(f"Correo: {usuario['email']}", size=14),
-                    #ft.Button("Cerrar Sesión", on_click=lambda e: mostrar_menu(), width=300)
                     menu(page, usuario)
                 ], spacing=20, horizontal_alignment="center"),                #padding=30,
                 #alignment=ft.alignment.Alignment(0, 0),
