@@ -2,13 +2,17 @@ import flet as ft
 
 # Vista de perfil de usuario
 def UserView(page: ft.Page):
-    user = getattr(page, "current_user", {"nombre": "Usuario", "email": "desconocido@example.com"})
-    return ft.Column(
-        [
-            ft.Image(src="assets/img/perfil.png", width=120, height=120),
-            ft.Text(user["nombre"], size=20),
-            ft.Text(user["email"], size=16),
-        ],
-        spacing=10,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+    user = page.current_user
+
+    # Vista simple del perfil
+    return ft.View(
+        route="/perfil",
+        appbar=ft.AppBar(title=ft.Text("Perfil")),
+        controls=[
+            ft.Column([
+                ft.Text(f"Nombre: {user['nombre']}", size=20),
+                ft.Text(f"Email: {user['email']}", size=16),
+                ft.Button("Volver", on_click=lambda _: page.go("/menu"))
+            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, spacing=20)
+        ]
     )
