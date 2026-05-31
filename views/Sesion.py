@@ -1,6 +1,7 @@
 import flet as ft
 import bcrypt
 from database.db import BD
+from controller.auth_controller import validar_datos_sesion
 
 def vista_sesion(page: ft.Page, al_exito):
     campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
@@ -11,8 +12,9 @@ def vista_sesion(page: ft.Page, al_exito):
         email = campo_email.value.strip()
         contraseña = campo_contraseña.value.strip()
         
-        if not email or not contraseña:
-            mensaje.value = "Completa todos los campos"
+        ok, msg = validar_datos_sesion(email, contraseña)
+        if not ok:
+            mensaje.value = f"✗ {msg}"
             page.update()
             return
         
