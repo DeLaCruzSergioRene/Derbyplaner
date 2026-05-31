@@ -11,30 +11,14 @@ def main(page: ft.Page):
     page.window_width = 400
     page.window_height = 500
     
-    #page.foreground_decoration = ft.BoxDecoration(
-    #    gradient=ft.LinearGradient(
-    #        colors=[
-    #            ft.Colors.with_opacity(0.2, ft.Colors.RED),  # use lightly transparent colors instead of solid ones
-    #           ft.Colors.with_opacity(0.2, ft.Colors.BLUE),
-    #        ],
-    #    ),
-    #    image=ft.DecorationImage(
-    #       src="assets\img\dormitorio.jpg",            opacity=0.2,
-    #   ),
-    #)
-    
     def al_iniciar_sesion(usuario):
+        page.current_user = usuario
         page.clean()
         page.add(
             ft.Container(
                 content=ft.Column([
-                    #ft.Text(f"ID: {usuario['id']}", size=14),
-                    #ft.Text(f"Nombre: {usuario['nombre']}", size=14),
-                    #ft.Text(f"Correo: {usuario['email']}", size=14),
-                    #ft.Button("Cerrar Sesión", on_click=lambda e: mostrar_menu(), width=300)
                     menu(page, usuario)
-                ], spacing=20, horizontal_alignment="center"),                #padding=30,
-                #alignment=ft.alignment.Alignment(0, 0),
+                ], spacing=20, horizontal_alignment="center"),                
                 expand=True
             )
         )

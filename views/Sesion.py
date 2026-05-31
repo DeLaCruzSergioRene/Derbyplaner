@@ -29,8 +29,6 @@ def vista_sesion(page: ft.Page, al_exito):
                 return
             
             if bcrypt.checkpw(contraseña.encode(), usuario_bd['password'].encode()):
-                mensaje.value = f"✓ Bienvenido {usuario_bd['nombre']}"
-                mensaje.color = "green"
                 page.update()
                 al_exito(usuario_bd)
             else:
