@@ -6,7 +6,9 @@ def menu(page: ft.Page, usuario):
 
     def cambiar_vista(e):
         page.clean()
-        if e.control.selected_index == 2:
+        if e.control.selected_index == 0:
+            seleccion(page)
+        elif e.control.selected_index == 2:
             page.add(perfil(page))
         else:
             page.add(ft.Image(
