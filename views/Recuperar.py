@@ -1,6 +1,7 @@
-import flet as ft
+﻿import flet as ft
 import os
 import secrets
+import time
 import bcrypt
 from database.db import BD
 
@@ -9,9 +10,25 @@ try:
 except Exception:
     yagmail = None
 
+# Recuperación de contraseña sencilla mediante email.
+
 def recuperar(page: ft.Page, volver):
-    tokens = {}  # {email: token}
-    
+    tokens = {}  # {email: (token, timestamp)}
+    token_vigencia = 10 * 60  # 10 minutos
+
+    def guardar_token(email, token):
+        tokens[email] = (token, time.time())
+
+    def token_valido(email, valor):
+        data = tokens.get(email)
+        if not data:
+            return False
+        token, creado = data
+        if time.time() - creado > token_vigencia:
+            tokens.pop(email, None)
+            return False
+        return token == valor
+
     def mostrar_formulario_email():
         campo_email = ft.TextField(label="Correo", width=300)
         mensaje = ft.Text("")
@@ -35,29 +52,32 @@ def recuperar(page: ft.Page, volver):
                 return
 
             token = secrets.token_urlsafe(8)
-            tokens[email] = token
-            
+            guardar_token(email, token)
+            enviado = False
             subject = "Recuperación de contraseña - Derby Planer"
-            body = f"Hola {usuario.get('nombre','')},\n\nHas solicitado recuperar tu contraseña. Código temporal: {token}\n\nSi no solicitaste esto, ignora este correo."
+            body = f"Hola {usuario.get('nombre', '')},\n\nHas solicitado recuperar tu contraseña. Código temporal: {token}\n\nSi no solicitaste esto, ignora este correo."
 
             if yagmail:
-                user = os.getenv('EMAIL_USER')
-                pwd = os.getenv('EMAIL_PASS')
+                user = os.getenv('EMAIL_USER', '').strip()
+                pwd = os.getenv('EMAIL_PASS', '').strip()
                 if user and pwd:
                     try:
                         yag = yagmail.SMTP(user, pwd)
                         yag.send(to=email, subject=subject, contents=body)
-                        mensaje.value = "✓ Correo enviado"
+                        mensaje.value = "✓ Correo enviado. Revisa tu email."
+                        enviado = True
                     except Exception as ex:
-                        mensaje.value = f"✗ Error: {str(ex)[:30]}"
+                        mensaje.value = f"✗ Error al enviar correo: {ex}"
+                        print(f"Error al enviar correo: {ex}")
                 else:
-                    mensaje.value = "✗ Falta configurar EMAIL_USER/EMAIL_PASS"
+                    mensaje.value = "✗ Falta EMAIL_USER/EMAIL_PASS en .env"
             else:
-                mensaje.value = "✗ yagmail no instalado"
+                mensaje.value = "✗ yagmail no instalado. Ejecuta pip install yagmail"
 
             page.update()
-            page.clean()
-            mostrar_formulario_token(email)
+            if enviado:
+                page.clean()
+                mostrar_formulario_token(email)
 
         page.clean()
         page.add(ft.Container(
@@ -68,7 +88,9 @@ def recuperar(page: ft.Page, volver):
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), volver()))
             ], spacing=15, horizontal_alignment="center"),
-            padding=30, expand=True, alignment=ft.alignment.Alignment(0, 0)
+            padding=30,
+            expand=True,
+            alignment=ft.alignment.Alignment(0, 0)
         ))
 
     def mostrar_formulario_token(email):
@@ -77,11 +99,11 @@ def recuperar(page: ft.Page, volver):
         mensaje = ft.Text("")
 
         def cambiar(e):
-            if campo_token.value != tokens.get(email):
-                mensaje.value = "✗ Código incorrecto"
+            if not token_valido(email, campo_token.value.strip()):
+                mensaje.value = "✗ Código incorrecto o expirado"
                 page.update()
                 return
-            
+
             if not campo_pass.value or len(campo_pass.value) < 6:
                 mensaje.value = "✗ Mínimo 6 caracteres"
                 page.update()
@@ -92,12 +114,13 @@ def recuperar(page: ft.Page, volver):
                 bd = BD()
                 bd.ejecutar("UPDATE usuarios SET password = %s WHERE email = %s", (nueva_pass, email))
                 bd.cerrar()
+                tokens.pop(email, None)
                 mensaje.value = "✓ Contraseña actualizada"
                 page.update()
                 page.clean()
                 volver()
-            except Exception as ex:
-                mensaje.value = f"✗ Error: {str(ex)[:30]}"
+            except Exception:
+                mensaje.value = "✗ No se pudo actualizar la contraseña"
                 page.update()
 
         page.clean()
@@ -110,7 +133,9 @@ def recuperar(page: ft.Page, volver):
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), mostrar_formulario_email()))
             ], spacing=15, horizontal_alignment="center"),
-            padding=30, expand=True, alignment=ft.alignment.Alignment(0, 0)
+            padding=30,
+            expand=True,
+            alignment=ft.alignment.Alignment(0, 0)
         ))
 
     mostrar_formulario_email()

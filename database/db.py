@@ -1,14 +1,18 @@
+import os
 import mysql.connector
 from mysql.connector import Error
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class BD:
     def __init__(self):
         try:
             self.conexion = mysql.connector.connect(
-                host="127.0.0.1",
-                user="root",
-                password="",
-                database="derby_planer"
+                host=os.getenv("DB_HOST", "127.0.0.1"),
+                user=os.getenv("DB_USER", "root"),
+                password=os.getenv("DB_PASSWORD", ""),
+                database=os.getenv("DB_NAME", "derby_planer")
             )
             self.cursor = self.conexion.cursor(dictionary=True)
         except Error as e:
