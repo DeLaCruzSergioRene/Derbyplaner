@@ -11,14 +11,17 @@ except Exception:
     yagmail = None
 
 # Recuperación de contraseña sencilla mediante email.
+# Esta vista muestra primero el formulario de correo y luego el de token.
 
 def recuperar(page: ft.Page, volver):
     tokens = {}  # {email: (token, timestamp)}
     token_vigencia = 10 * 60  # 10 minutos
 
+    # Guarda un token temporal válido para un email específico
     def guardar_token(email, token):
         tokens[email] = (token, time.time())
 
+    # Verifica si el token aún está vigente y coincide con el valor esperado
     def token_valido(email, valor):
         data = tokens.get(email)
         if not data:
@@ -29,10 +32,12 @@ def recuperar(page: ft.Page, volver):
             return False
         return token == valor
 
+    # Muestra el formulario inicial donde se ingresa el correo electrónico
     def mostrar_formulario_email():
         campo_email = ft.TextField(label="Correo", width=300)
         mensaje = ft.Text("")
 
+        # Envía el código temporal al email si el usuario existe
         def enviar(e):
             email = campo_email.value.strip()
             if not email:
@@ -93,11 +98,13 @@ def recuperar(page: ft.Page, volver):
             alignment=ft.alignment.Alignment(0, 0)
         ))
 
+    # Muestra el formulario para ingresar el token y la nueva contraseña
     def mostrar_formulario_token(email):
         campo_token = ft.TextField(label="Código", width=300)
         campo_pass = ft.TextField(label="Nueva contraseña", password=True, width=300)
         mensaje = ft.Text("")
 
+        # Cambia la contraseña si el token es válido y la nueva clave cumple requisitos
         def cambiar(e):
             if not token_valido(email, campo_token.value.strip()):
                 mensaje.value = "✗ Código incorrecto o expirado"

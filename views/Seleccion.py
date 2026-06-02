@@ -1,5 +1,7 @@
 import flet as ft
+from views.Creacion import creacion
 
+# Lista de imagens de umas disponibles para seleccionar
 UMAS = [
     "Air_Grove.png", "El_Condor_Pasa.png", "Daiwa_Scarlet.png", "GoldShip.png", 
     "Grass_Wonder.png", "Kitasan_Black.png", "Manhattan_Cafe.png", "Mejiro_Bright.png",
@@ -9,13 +11,17 @@ UMAS = [
 ]
 
 def seleccion(page: ft.Page):
+    # Maneja la selección de una uma y navega a la vista de creación
     def on_click_uma(e, uma_name):
         page.current_user['uma_seleccionada'] = uma_name
-        print(f"Uma seleccionada: {uma_name}")
+        page.clean()
+        creacion(page)
     
+    # Convierte el nombre del archivo en una etiqueta legible
     def get_uma_label(filename):
         return filename.replace("_", " ").replace(".png", "")
     
+    # Construye los botones de cada uma con imagen y nombre
     buttons = [
         ft.Container(
             content=ft.Column([
@@ -33,6 +39,7 @@ def seleccion(page: ft.Page):
         for uma in UMAS
     ]
     
+    # Muestra la pantalla de selección de umas al usuario
     page.add(
         ft.Container(
             content=ft.Column([

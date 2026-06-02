@@ -96,6 +96,11 @@ CREATE TABLE IF NOT EXISTS `resultados` (
 `race_id` int(11) DEFAULT NULL,
 `uma_id` int(11) DEFAULT NULL,
 `posicion` int(11) DEFAULT NULL,
+`fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+`tiempo` INT DEFAULT NULL,
+`habilidad_1` INT DEFAULT NULL,
+`habilidad_2` INT DEFAULT NULL,
+`habilidad_3` INT DEFAULT NULL,
 PRIMARY KEY (`id`),
 KEY `user_id` (`user_id`),
 KEY `race_id` (`race_id`),
@@ -155,6 +160,7 @@ CREATE TABLE IF NOT EXISTS `umas` (
 `nombre` varchar(50) DEFAULT NULL,
 `estilo` varchar(20) DEFAULT NULL,
 `suelo_fav` varchar(20) DEFAULT NULL,
+`imagen` varchar(100) DEFAULT NULL,
 PRIMARY KEY (`id`),
 KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

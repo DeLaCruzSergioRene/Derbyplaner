@@ -6,4 +6,7 @@
 "DB_PASSWORD" =
 "DB_NAME" = derby_planer
 
-Base de datos lista por ahora.
+EMAIL_USER=tu_correo@gmail.com
+EMAIL_PASS=tu_password_de_aplicación
+
+-Base de datos actualizada ligeramente para guardar mas cosas en los resultados junto a la imagen de la uma.

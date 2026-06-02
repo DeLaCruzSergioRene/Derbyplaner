@@ -2,8 +2,10 @@ import flet as ft
 from views.Seleccion import seleccion
 from views.Perfil import perfil
 
+# Menú principal con navegación entre secciones
 def menu(page: ft.Page, usuario):
 
+    # Cambia la vista al navegar en la barra inferior
     def cambiar_vista(e):
         page.clean()
         if e.control.selected_index == 0:
@@ -16,6 +18,7 @@ def menu(page: ft.Page, usuario):
                 fit="cover",
             ))
 
+    # Barra de navegación principal con opciones de juego, historial y perfil
     page.navigation_bar = ft.NavigationBar(
         destinations=[
             ft.NavigationBarDestination(icon=ft.Icons.GAMEPAD, label="Jugar"),
@@ -25,6 +28,8 @@ def menu(page: ft.Page, usuario):
         on_change=cambiar_vista,
     )
 
+    # Muestra el fondo inicial del menú cuando se abre la aplicación
+    # El contenido se reemplaza cuando el usuario navega a otra sección
     page.add(ft.Image(
         src="assets/img/dormitorio.jpg",
         fit="cover",

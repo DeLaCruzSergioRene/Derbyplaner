@@ -4,10 +4,12 @@ from database.db import BD
 from controller.auth_controller import validar_datos_sesion
 
 def vista_sesion(page: ft.Page, al_exito):
+    # Campos de entrada para iniciar sesión
     campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
     campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
     mensaje = ft.Text("", color="red")
     
+    # Valida los datos del usuario y llama al callback de éxito si todo está bien
     def iniciar_sesion(e):
         email = campo_email.value.strip()
         contraseña = campo_contraseña.value.strip()
@@ -19,6 +21,7 @@ def vista_sesion(page: ft.Page, al_exito):
             return
         
         try:
+            # Busca el usuario en la base de datos usando el email
             bd = BD()
             usuario_bd = bd.obtener_uno("SELECT * FROM usuarios WHERE email = %s", (email,))
             bd.cerrar()
@@ -38,6 +41,8 @@ def vista_sesion(page: ft.Page, al_exito):
             mensaje.value = f"✗ Error: {str(ex)[:40]}"
             page.update()
     
+    # Retorna la interfaz de inicio de sesión con botón y mensajes
+    # Construye la vista final de inicio de sesión con todos los controles
     return ft.Container(
         content=ft.Column([
             ft.Text("INICIAR SESIÓN", size=24, weight="bold"),
