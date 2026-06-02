@@ -12,13 +12,13 @@ def creacion(page: ft.Page):
     uma_img = page.current_user.get('uma_seleccionada', 'Air_Grove.png')
     uma_label = uma_img.replace("_", " ").replace(".png", "")
     
-    # Sliders
+    # Sliders para modificar estadisticas de tu uma
     slider_vel = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_sta = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_pow = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_int = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     
-    # Dropdown terreno
+    # Dropdown de seleecion de terreno
     terreno = ft.Dropdown(
         value="Pasto",
         options=[ft.dropdown.Option("Pasto"), ft.dropdown.Option("Tierra")],
@@ -26,10 +26,10 @@ def creacion(page: ft.Page):
         label="Terreno"
     )
     
-    # Habilidades - Checkboxes con iconos
+    # Habilidades - Checkboxes con iconos de los assets
     habilidades_seleccionadas = {}
     
-    # Restringe la selección a un máximo de 3 habilidades
+    # Restringe la selección de habilidades a un máximo de 3 habilidades
     def limitar_habilidades(e):
         total = sum(1 for cb in habilidades_seleccionadas.values() if cb.value)
         if total > 3:
@@ -83,7 +83,7 @@ def creacion(page: ft.Page):
     
     contenido = ft.Column([
         ft.Text(uma_label, size=28, weight="bold", color="#B814CE", text_align="center"),
-        ft.Image(src=f"assets/umamusumes/{uma_img}", width=180, height=180, fit="contain"),
+        ft.Image(src=f"assets/umamusumes/{uma_img}", width=200, height=200, fit="contain"),
         
         # Separador y título de la sección de estadísticas
         ft.Divider(height=10, color="#E6C9F5"),
