@@ -20,8 +20,8 @@ def creacion(page: ft.Page):
     
     # Dropdown terreno
     terreno = ft.Dropdown(
-        value="pasto",
-        options=[ft.dropdown.Option("pasto"), ft.dropdown.Option("tierra")],
+        value="Pasto",
+        options=[ft.dropdown.Option("Pasto"), ft.dropdown.Option("Tierra")],
         width=250,
         label="Terreno"
     )
