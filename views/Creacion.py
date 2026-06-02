@@ -13,10 +13,10 @@ def creacion(page: ft.Page):
     uma_label = uma_img.replace("_", " ").replace(".png", "")
     
     # Sliders
-    slider_vel = ft.Slider(value=100, min=0, max=1000, divisions=10, label="{value}%", width=250)
-    slider_sta = ft.Slider(value=100, min=0, max=1000, divisions=10, label="{value}%", width=250)
-    slider_pow = ft.Slider(value=100, min=0, max=1000, divisions=10, label="{value}%", width=250)
-    slider_int = ft.Slider(value=100, min=0, max=1000, divisions=10, label="{value}%", width=250)
+    slider_vel = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
+    slider_sta = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
+    slider_pow = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
+    slider_int = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     
     # Dropdown terreno
     terreno = ft.Dropdown(
@@ -49,7 +49,7 @@ def creacion(page: ft.Page):
         return ft.Container(
             content=ft.Column([
                 ft.Row([
-                    ft.Image(src=icono_path, width=24, height=24),
+                    ft.Image(src=icono_path, width=28, height=28),
                     ft.Text(tipo, size=16, weight="bold", color="#B814CE")
                 ], spacing=10),
                 ft.Column(hab_grupo, spacing=5)
