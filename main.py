@@ -13,6 +13,7 @@ def main(page: ft.Page):
     
     def al_iniciar_sesion(usuario):
         page.current_user = usuario
+        page.foreground_decoration = None
         page.clean()
         page.add(
             ft.Container(
@@ -24,22 +25,30 @@ def main(page: ft.Page):
         )
     
     def mostrar_menu():
+        page.foreground_decoration = ft.BoxDecoration(
+            image=ft.DecorationImage(
+                src="assets/img/umc.jpg",
+                fit="cover",
+                opacity=0.2,
+            ),
+        )
         page.clean()
         page.add(
             ft.Container(
                 content=ft.Column([
-                    ft.Text("Derby Planer", size=32, weight="bold"),
-                    ft.Button("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
-                    ft.Button("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion()),
-                ], spacing=20, horizontal_alignment="center"),
+                    ft.Text("Derby Planer", size=36, weight="bold"),
+                    ft.Button("Registrarse", width=300, height=55, elevation=4, on_click=lambda e: mostrar_registro(), style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12))),
+                    ft.Button("Iniciar Sesión", width=300, height=55, elevation=4, on_click=lambda e: mostrar_sesion(), style=ft.ButtonStyle(shape=ft.RoundedRectangleBorder(radius=12))),
+                ], spacing=25, horizontal_alignment="center"),
                 padding=30,
-                alignment=ft.alignment.Alignment(0, 0),
+                alignment=ft.alignment.Alignment(0, 0.25),
                 expand=True
             )
             
         )
     
     def mostrar_registro():
+        page.foreground_decoration = None
         page.clean()
         page.add(
             ft.Container(
@@ -54,6 +63,7 @@ def main(page: ft.Page):
         )
     
     def mostrar_sesion():
+        page.foreground_decoration = None
         page.clean()
         page.add(
             ft.Container(
@@ -68,12 +78,5 @@ def main(page: ft.Page):
             )
         )
     mostrar_menu()
-    page.foreground_decoration = ft.BoxDecoration(
-        image=ft.DecorationImage(
-            src="assets/img/umc.jpg",
-            fit="cover",
-            opacity=0.2,
-        ),
-    )
     
 ft.run(main)
