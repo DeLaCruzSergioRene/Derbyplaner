@@ -6,6 +6,16 @@ from views.Sesion import vista_sesion
 from views.Recuperar import recuperar
 from views.Menu import menu
 
+#@ft.control
+#class MyButton(ft.Button):
+#    def init(self):
+#        self.bgcolor = ft.Colors.WHITE
+#        self.color = ft.Colors.BLUE_ACCENT_100
+#        self.style = ft.ButtonStyle(
+#            shape=ft.RoundedRectangleBorder(radius=3)
+#        )
+
+
 def main(page: ft.Page):
     page.title = "Derby Planer"
     #page.window_width = 400
@@ -29,7 +39,7 @@ def main(page: ft.Page):
             ft.Container(
                 content=ft.Column([
                     ft.Text("Derby Planer", size=32, weight="bold"),
-                    ft.Button("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
+                    MyButton("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
                     ft.Button("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion()),
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
