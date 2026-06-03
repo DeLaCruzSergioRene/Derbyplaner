@@ -30,7 +30,7 @@ def vista_registro(page: ft.Page, al_exito):
             bd.ejecutar("INSERT INTO usuarios (nombre, email, password) VALUES (%s, %s, %s)", 
                 (nombre, email, hashed))
             bd.cerrar()
-            mensaje.value = "✓ Registrado exitosamente"
+            mensaje.value = "Registrado exitosamente"
             mensaje.color = "green"
             campo_nombre.value = ""
             campo_email.value = ""

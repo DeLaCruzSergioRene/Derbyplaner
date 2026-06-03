@@ -1,6 +1,7 @@
 import flet as ft
 from views.Seleccion import seleccion
 from views.Perfil import perfil
+from views.Acerca import acercaDe
 
 # Menú principal con navegación entre secciones
 def menu(page: ft.Page, usuario):
@@ -12,6 +13,8 @@ def menu(page: ft.Page, usuario):
             seleccion(page)
         elif e.control.selected_index == 2:
             page.add(perfil(page))
+        elif e.control.selected_index == 3:
+            page.add(acercaDe(page))
         else:
             page.add(ft.Image(
                 src="assets/img/dormitorio.jpg",
@@ -24,6 +27,7 @@ def menu(page: ft.Page, usuario):
             ft.NavigationBarDestination(icon=ft.Icons.GAMEPAD, label="Jugar"),
             ft.NavigationBarDestination(icon=ft.Icons.HISTORY, label="Historial"),
             ft.NavigationBarDestination(icon=ft.Icons.PERSON, label="Perfil"),
+            ft.NavigationBarDestination(icon=ft.Icons.PERSON, label="Acerca de..."),
         ],
         on_change=cambiar_vista,
     )

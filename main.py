@@ -8,8 +8,8 @@ from views.Menu import menu
 
 def main(page: ft.Page):
     page.title = "Derby Planer"
-    page.window_width = 400
-    page.window_height = 500
+    #page.window_width = 400
+    #page.window_height = 500
     
     def al_iniciar_sesion(usuario):
         page.current_user = usuario
@@ -17,7 +17,7 @@ def main(page: ft.Page):
         page.add(
             ft.Container(
                 content=ft.Column([
-                    menu(page, usuario)
+                    menu(page, usuario),
                 ], spacing=20, horizontal_alignment="center"),                
                 expand=True
             )
@@ -30,12 +30,13 @@ def main(page: ft.Page):
                 content=ft.Column([
                     ft.Text("Derby Planer", size=32, weight="bold"),
                     ft.Button("Registrarse", width=300, on_click=lambda e: mostrar_registro()),
-                    ft.Button("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion())
+                    ft.Button("Iniciar Sesión", width=300, on_click=lambda e: mostrar_sesion()),
                 ], spacing=20, horizontal_alignment="center"),
                 padding=30,
                 alignment=ft.alignment.Alignment(0, 0),
                 expand=True
             )
+            
         )
     
     def mostrar_registro():
@@ -67,5 +68,12 @@ def main(page: ft.Page):
             )
         )
     mostrar_menu()
-#te
+    page.foreground_decoration = ft.BoxDecoration(
+        image=ft.DecorationImage(
+            src="assets/img/umc.jpg",
+            fit="cover",
+            opacity=0.2,
+        ),
+    )
+    
 ft.run(main)
