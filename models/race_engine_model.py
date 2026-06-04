@@ -5,9 +5,9 @@ class RaceEngine:
     
     # Desgaste de stats por fase de carrera (early/mid/late aumenta dificultad)
     FATIGA_BASE = {
-        'early': {'velocidad': 1, 'stamina': 1, 'poder': 1},
-        'mid': {'velocidad': 1.5, 'stamina': 1.7, 'poder': 1.6},
-        'late': {'velocidad': 2, 'stamina': 2.5, 'poder': 2.2}
+        'early': {'velocidad': 1.4, 'stamina': 1.3, 'poder': 1.3},
+        'mid': {'velocidad': 1.8, 'stamina': 1.8, 'poder': 1.7},
+        'late': {'velocidad': 2.2, 'stamina': 2.3, 'poder': 2.5}
     }
     
     # Bonificadores por terreno (afectan especialmente el poder)
