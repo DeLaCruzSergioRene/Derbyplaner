@@ -5,10 +5,10 @@ from models.creacion_model import HABILIDADES, get_uma_label
 def generar_stats_aleatorios():
     """Genera stats aleatorios para una uma competidora."""
     return {
-        'velocidad': random.randint(0, 1000),
-        'stamina': random.randint(0, 1000),
-        'poder': random.randint(0, 1000),
-        'inteligencia': random.randint(0, 1000),
+        'velocidad': random.randint(150, 1000),
+        'stamina': random.randint(150, 1000),
+        'poder': random.randint(150, 1000),
+        'inteligencia': random.randint(150, 1000),
     }
 
 def generar_habilidades_aleatorias():
