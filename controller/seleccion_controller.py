@@ -16,6 +16,7 @@ def cargar_seleccion(page: ft.Page):
                 ft.Image(src=f"assets/umamusumes/{uma}", width=160, height=160, fit="contain"),
             ], spacing=3, horizontal_alignment="center"),
             ink=True,
+            bgcolor="#EDEEEF",
             on_click=lambda e, u=uma: on_click_uma(e, u)
         )
         for uma in UMAS
@@ -35,7 +36,8 @@ def cargar_seleccion(page: ft.Page):
                 )
             ], spacing=20, expand=True),
             padding=15,
-            expand=True
+            expand=True,
+            bgcolor="#CCE6FF"
         )
     )
     # Guardamos en `page.current_user` para uso inmediato.

@@ -3,6 +3,15 @@ import bcrypt
 from database.db import BD
 from controller.auth_controller import validar_datos_registro
 
+@ft.control
+class boton3(ft.Button):
+    def init(self):
+        self.bgcolor = ft.Colors.WHITE
+        self.color = ft.Colors.BLUE_ACCENT_100
+        self.style = ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=3)
+        )
+
 def vista_registro(page: ft.Page, al_exito):
     # Campos para crear un nuevo usuario
     campo_nombre = ft.TextField(label="Nombre", width=300)
@@ -47,7 +56,7 @@ def vista_registro(page: ft.Page, al_exito):
             campo_nombre,
             campo_email,
             campo_contraseña,
-            ft.Button("Registrarse", on_click=registrar, width=300),
+            boton3("Registrarse", on_click=registrar, width=300),
             mensaje
         ], spacing=15, horizontal_alignment="center"),
         padding=30,

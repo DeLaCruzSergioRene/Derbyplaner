@@ -13,6 +13,15 @@ except Exception:
 # Recuperación de contraseña sencilla mediante email.
 # Esta vista muestra primero el formulario de correo y luego el de token.
 
+@ft.control
+class boton2(ft.Button):
+    def init(self):
+        self.bgcolor = ft.Colors.WHITE
+        self.color = ft.Colors.BLUE_ACCENT_100
+        self.style = ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=3)
+        )
+
 def recuperar(page: ft.Page, volver):
     tokens = {}  # {email: (token, timestamp)}
     token_vigencia = 10 * 60  # 10 minutos
@@ -89,7 +98,7 @@ def recuperar(page: ft.Page, volver):
             content=ft.Column([
                 ft.Text("RECUPERAR CONTRASEÑA", size=24, weight="bold"),
                 campo_email,
-                ft.Button("Enviar código", on_click=enviar, width=300),
+                boton2("Enviar código", on_click=enviar, width=300),
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), volver()))
             ], spacing=15, horizontal_alignment="center"),
@@ -136,7 +145,7 @@ def recuperar(page: ft.Page, volver):
                 ft.Text("Ingresa el código y nueva contraseña", size=16, weight="bold"),
                 campo_token,
                 campo_pass,
-                ft.Button("Cambiar contraseña", on_click=cambiar, width=300),
+                boton2("Cambiar contraseña", on_click=cambiar, width=300),
                 mensaje,
                 ft.TextButton("Volver", on_click=lambda e: (page.clean(), mostrar_formulario_email()))
             ], spacing=15, horizontal_alignment="center"),

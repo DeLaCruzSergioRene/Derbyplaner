@@ -3,6 +3,14 @@ import bcrypt
 from database.db import BD
 from controller.auth_controller import validar_datos_sesion
 
+class boton4(ft.Button):
+    def init(self):
+        self.bgcolor = ft.Colors.WHITE
+        self.color = ft.Colors.BLUE_ACCENT_100
+        self.style = ft.ButtonStyle(
+            shape=ft.RoundedRectangleBorder(radius=3)
+        )
+
 def vista_sesion(page: ft.Page, al_exito):
     # Campos de entrada para iniciar sesión
     campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
@@ -48,7 +56,7 @@ def vista_sesion(page: ft.Page, al_exito):
             ft.Text("INICIAR SESIÓN", size=24, weight="bold"),
             campo_email,
             campo_contraseña,
-            ft.Button("Entrar", on_click=iniciar_sesion, width=300),
+            boton4("Entrar", on_click=iniciar_sesion, width=300),
             mensaje,
         ], spacing=15, horizontal_alignment="center"),
         padding=30,
