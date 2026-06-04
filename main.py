@@ -15,12 +15,9 @@ from views.Menu import menu
 #            shape=ft.RoundedRectangleBorder(radius=3)
 #        )
 
-
 def main(page: ft.Page):
     page.title = "Derby Planer"
-    #page.window_width = 400
-    #page.window_height = 500
-    
+
     def al_iniciar_sesion(usuario):
         page.current_user = usuario
         page.foreground_decoration = None
@@ -89,4 +86,5 @@ def main(page: ft.Page):
         )
     mostrar_menu()
     
+
 ft.run(main)

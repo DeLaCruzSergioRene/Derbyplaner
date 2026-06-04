@@ -1,18 +1,10 @@
-"""Operaciones de BD específicas para el juego Derby Planer."""
+# Operaciones de BD específicas para el juego Derby Planer.
 from database.db import BD
 
 
 def guardar_uma_creada(user_id, config_uma):
-	"""
-	Guarda una uma creada en la BD.
-	
-	Args:
-		user_id: ID del usuario
-		config_uma: dict con {uma, label, velocidad, stamina, poder, inteligencia, terreno, habilidades}
-	
-	Returns:
-		int: ID de la uma creada, o None si falla
-	"""
+	# Guarda una uma creada en la BD. Args: user_id: ID del usuario, config_uma: dict con {uma, label, velocidad, stamina, poder, inteligencia, terreno, habilidades}
+	# Returns: int: ID de la uma creada, o None si falla
 	try:
 		bd = BD()
 		
@@ -66,17 +58,9 @@ def guardar_uma_creada(user_id, config_uma):
 
 
 def guardar_carrera(distancia, terreno, nombre="Carrera"):
-	"""
-	Guarda una carrera en la BD.
+	# Guarda una carrera en la BD. Args: distancia: int (ej: 2000), terreno: str (ej: "Pasto", "Tierra"), nombre: str (nombre de la carrera)
+	# Returns: int: ID de la carrera creada, o None si falla
 	
-	Args:
-		distancia: int (ej: 2000)
-		terreno: str (ej: "Pasto", "Tierra")
-		nombre: str (nombre de la carrera)
-	
-	Returns:
-		int: ID de la carrera creada, o None si falla
-	"""
 	try:
 		bd = BD()
 		
@@ -99,20 +83,9 @@ def guardar_carrera(distancia, terreno, nombre="Carrera"):
 
 
 def guardar_resultado(user_id, carrera_id, uma_id, posicion, tiempo_llegada, habilidades):
-	"""
-	Guarda el resultado de una carrera en la BD.
+	# Guarda el resultado de una carrera en la BD. Args: user_id: ID del usuario, carrera_id: ID de la carrera uma_id: ID de la uma que participó, posicion: int (1, 2, 3, 4, 5), tiempo_llegada: int (ticks totales hasta terminar), habilidades: list de str (nombres de habilidades usadas)
+	# Returns: int: ID del resultado, o None si falla
 	
-	Args:
-		user_id: ID del usuario
-		carrera_id: ID de la carrera
-		uma_id: ID de la uma que participó
-		posicion: int (1, 2, 3, 4, 5)
-		tiempo_llegada: int (ticks totales hasta terminar)
-		habilidades: list de str (nombres de habilidades usadas)
-	
-	Returns:
-		int: ID del resultado, o None si falla
-	"""
 	try:
 		bd = BD()
 		
@@ -155,12 +128,9 @@ def guardar_resultado(user_id, carrera_id, uma_id, posicion, tiempo_llegada, hab
 
 
 def obtener_umas_usuario(user_id):
-	"""
-	Obtiene todas las umas creadas por un usuario.
+	# Obtiene todas las umas creadas por un usuario.
+	#Returns: list: Lista de dicts con info de umas
 	
-	Returns:
-		list: Lista de dicts con info de umas
-	"""
 	try:
 		bd = BD()
 		consulta = "SELECT * FROM umas WHERE user_id = %s"
@@ -173,12 +143,9 @@ def obtener_umas_usuario(user_id):
 
 
 def obtener_resultados_usuario(user_id):
-	"""
-	Obtiene todos los resultados de carreras de un usuario.
+	# Obtiene todos los resultados de carreras de un usuario.
+	# Returns: list: Lista de dicts con resultados
 	
-	Returns:
-		list: Lista de dicts con resultados
-	"""
 	try:
 		bd = BD()
 		consulta = """
