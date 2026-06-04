@@ -17,10 +17,7 @@ def obtener_habilidades_seleccionadas(seleccion: dict) -> list:
 
 
 def construir_configuracion(uma_img: str, velocidad: int, stamina: int, poder: int, inteligencia: int, terreno: str, habilidades: list, max_habilidades: int = 3) -> dict:
-    # Construye y valida la configuración final de la creación. Lanza `ValueError` si se excede el máximo de habilidades permitidas.
-    if len(habilidades) > max_habilidades:
-        raise ValueError(f"Solo puedes seleccionar hasta {max_habilidades} habilidades")
-
+    # Construye la configuración final de la creación.
     return {
         'uma': uma_img,
         'velocidad': velocidad,

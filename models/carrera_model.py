@@ -1,24 +1,17 @@
-"""Model para manejar la creación de carreras.
-
-Incluye constantes válidas y funciones utilitarias para construir
-una carrera y generar un resumen basado en la configuración de
-creación de la `uma`.
-"""
+# Model para manejar la creación de carreras. Incluye constantes válidas y funciones utilitarias para construir una carrera y generar un resumen basado en la configuración de creación de la `uma`.
 
 from models.creacion_model import get_uma_label
-
 
 # Opciones válidas para distancia y terreno. Usadas por el UI.
 DISTANCIAS = ["1200m", "1400m", "1600m", "1800m", "2000m", "2200m", "2400m"]
 TERRENOS = ["Pasto", "Tierra"]
 
 
-def construir_carrera(nombre: str, distancia: int, terreno: str) -> dict:
-    """Valida y construye una estructura de carrera lista para guardar.
-
-    - Valida que el `nombre` no esté vacío.
-    - Comprueba que `distancia` y `terreno` pertenezcan a las opciones.
-    """
+def construir_carrera(nombre: str, distancia: str, terreno: str) -> dict:
+    # Valida y construye una estructura de carrera lista para guardar.
+    # - Valida que el `nombre` no esté vacío.
+    # - Comprueba que `distancia` y `terreno` pertenezcan a las opciones (como strings, ej. '1600m').
+    
     if not nombre or not nombre.strip():
         raise ValueError("El nombre de la carrera no puede quedar vacío")
     if distancia not in DISTANCIAS:
@@ -34,11 +27,8 @@ def construir_carrera(nombre: str, distancia: int, terreno: str) -> dict:
 
 
 def resumen_creacion(config: dict) -> list:
-    """Genera una lista de líneas para mostrar un mini-resumen.
-
-    El resumen extrae campos relevantes de la configuración de creación
-    y devuelve una lista de strings para mostrar en la UI.
-    """
+    # Genera una lista de líneas para mostrar un mini-resumen. El resumen extrae campos relevantes de la configuración de creación y devuelve una lista de strings para mostrar en la UI.
+    
     if not config:
         return []
 

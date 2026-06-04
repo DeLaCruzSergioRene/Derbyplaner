@@ -71,18 +71,18 @@ TRUNCATE TABLE `habilidades`;
 --
 
 INSERT INTO `habilidades` (`id`, `nombre`) VALUES
-(1, 'Sprint Final'),
-(2, 'Recuperación Stamina'),
-(3, 'Arranque Explosivo'),
-(4, 'Visión de Campo'),
-(5, 'Maestro de Curvas'),
-(6, 'Resistencia Tierra'),
-(7, 'Cierre Veloz'),
-(8, 'Ritmo Constante'),
-(9, 'Impulso Inicial'),
-(10, 'Corazón de Acero'),
-(11, 'Zancada Larga'),
-(12, 'Análisis de Rival');
+(1, 'Sprint Boost'),
+(2, 'Aceleración'),
+(3, 'Velocidad Máxima'),
+(4, 'Salida Rápida'),
+(5, 'Arrancada Fuerte'),
+(6, 'Salto Poderoso'),
+(7, 'Empuje Final'),
+(8, 'Resistencia Bruta'),
+(9, 'Segundo Aire'),
+(10, 'Resistencia'),
+(11, 'Recuperación'),
+(12, 'Defensa');
 
 -- --------------------------------------------------------
 

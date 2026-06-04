@@ -7,18 +7,23 @@ def carrera(page: ft.Page):
     uma_img = page.current_user.get('uma_seleccionada', 'Air_Grove.png')
     uma_label = get_uma_label(uma_img)
     creacion_config = page.current_user.get('creacion', {})
+    carrera_cfg = page.current_user.get('carrera')
 
-    nombre_carrera = ft.TextField(label="Nombre de la carrera", width=300, value="Mi Carrera")
+    nombre_carrera = ft.TextField(
+        label="Nombre de la carrera",
+        width=300,
+        value=carrera_cfg.get('nombre', 'Mi Carrera') if carrera_cfg else 'Mi Carrera'
+    )
     distancia = ft.Dropdown(
         label="Distancia",
         width=300,
-        value=str(DISTANCIAS[2]),
+        value=carrera_cfg.get('distancia', str(DISTANCIAS[2])) if carrera_cfg else str(DISTANCIAS[2]),
         options=[ft.dropdown.Option(str(d)) for d in DISTANCIAS],
     )
     terreno = ft.Dropdown(
         label="Terreno de la carrera",
         width=300,
-        value=TERRENOS[0],
+        value=carrera_cfg.get('terreno', TERRENOS[0]) if carrera_cfg else TERRENOS[0],
         options=[ft.dropdown.Option(t) for t in TERRENOS],
     )
 
@@ -26,10 +31,11 @@ def carrera(page: ft.Page):
         try:
             config = construir_carrera(
                 nombre_carrera.value,
-                int(distancia.value),
+                distancia.value,
                 terreno.value,
             )
             page.current_user['carrera'] = config
+            estado_text.value = "Carrera creada y lista para jugar."
             page.snack_bar = ft.SnackBar(
                 ft.Text(f"Carrera '{config['nombre']}' creada", color="white"),
                 bgcolor="#744BB1"
@@ -50,6 +56,39 @@ def carrera(page: ft.Page):
         from views.Creacion import creacion
         creacion(page)
 
+    def ir_a_juego(e):
+        carrera_cfg = page.current_user.get('carrera')
+        if not carrera_cfg:
+            nombre_seleccionado = nombre_carrera.value.strip() or f"Carrera de {uma_label}"
+            distancia_seleccionada = distancia.value
+            terreno_seleccionado = terreno.value
+            try:
+                config = construir_carrera(
+                    nombre_seleccionado,
+                    distancia_seleccionada,
+                    terreno_seleccionado,
+                )
+                page.current_user['carrera'] = config
+                carrera_cfg = config
+            except Exception:
+                page.snack_bar = ft.SnackBar(
+                    ft.Text("No hay una carrera creada. Crea una carrera primero.", color="white"),
+                    bgcolor="#B8141C"
+                )
+                page.snack_bar.open = True
+                page.update()
+                return
+
+        page.snack_bar = ft.SnackBar(
+            ft.Text("Abriendo la vista de juego...", color="white"),
+            bgcolor="#2E7D32"
+        )
+        page.snack_bar.open = True
+        page.clean()
+        from views.Juego import juego
+        juego(page)
+        page.update()
+
     resumen_ui = []
     resumen = resumen_creacion(creacion_config)
     if resumen:
@@ -58,10 +97,18 @@ def carrera(page: ft.Page):
     else:
         resumen_ui = [ft.Text("No hay configuración de creación guardada aún.", size=14, color="#4A148C")]
 
+    estado_text = (
+        f"Carrera '{carrera_cfg.get('nombre')}' creada y lista para jugar." if carrera_cfg else
+        "Aún no has creado la carrera, por favor elige la distancia, el terreno y si gustas un nombre. Luego, pulsa 'Crear carrera' primero."
+    )
+    estado_ui = ft.Text(estado_text, size=14, color="#4A148C")
+
     contenido = ft.Column([
         ft.Text("Crear tu propia carrera", size=28, weight="bold", color="#744BB1", text_align="center"),
         ft.Image(src=f"assets/umamusumes/{uma_img}", width=220, height=220, fit="contain"),
         ft.Text(uma_label, size=22, weight="bold", color="#B814CE", text_align="center"),
+        ft.Divider(height=8, color="#E6C9F5"),
+        estado_ui,
         ft.Divider(height=8, color="#E6C9F5"),
         ft.Column([
             ft.Text("Tu selección de creación:", size=16, weight="bold", color="#744BB1"),
@@ -79,6 +126,7 @@ def carrera(page: ft.Page):
         terreno,
         ft.Row([
             ft.Button("Crear carrera", on_click=crear_nueva_carrera, bgcolor="#744BB1", color="white"),
+            ft.Button("Ir al juego", on_click=ir_a_juego, bgcolor="#2E7D32", color="white"),
             ft.Button("Volver", on_click=volver, bgcolor="#A0A0A0", color="white"),
         ], spacing=10, alignment="center"),
     ], spacing=16, horizontal_alignment="center", scroll="auto")
