@@ -206,6 +206,8 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 			minutos = tiempo_llegada // 60
 			segundos = tiempo_llegada % 60
 			tiempo_str = f"{minutos:02d}:{segundos:02d}"
+		else:
+			tiempo_str = ""
 		
 		resultado_col.controls.append(
 			ft.Container(
