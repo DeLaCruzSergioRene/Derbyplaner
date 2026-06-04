@@ -10,3 +10,24 @@ EMAIL_USER=tu_correo@gmail.com
 EMAIL_PASS=tu_password_de_aplicación
 
 -Base de datos actualizada ligeramente para guardar mas cosas en los resultados junto a la imagen de la uma.
+-Proyecto muy largo y uso de cosas como los tics para indicar el avance de las Umamusumes.
+
+Importancia de las stats para tu umamusume:
+
+- ⚡ VELOCIDAD (70% del movimiento).
+Es el stat más importante para avanzar.
+Contribuye el 70% a tu velocidad de desplazamiento.
+Más velocidad = terminas la carrera más rápido.
+- 💪 STAMINA (30% del movimiento).
+Complementa la velocidad (30% del desplazamiento).
+Afecta cuánto te desgastas en las fases mid y late de la carrera.
+Más stamina = menos cansancio en la recta final.
+-🔥 PODER.
+Afecta principalmente el desgaste según el terreno.
+Si el terreno favorito coincide con la carrera → bonus (0.8x desgaste).
+Si el terreno no coincide → penalty (1.2x desgaste).
+Más poder = mejor manejo del terreno.
+-🧠 INTELIGENCIA (la más importante después de velocidad).
+Reduce el desgaste total hasta 70% (huge buff).
+Aumenta frecuencia de habilidades (menos intervalo, más probabilidad).
+Una uma inteligente se cansa menos y activa más habilidades.

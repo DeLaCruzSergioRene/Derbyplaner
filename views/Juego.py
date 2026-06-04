@@ -105,7 +105,8 @@ def juego(page: ft.Page):
 			contador_tiempo,
 			texto_fase,
 			filas_umas,
-			volver_a_carreras
+			volver_a_carreras,
+			carrera_cfg.get('terreno', 'Pasto')
 		)
 
 

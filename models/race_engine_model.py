@@ -18,21 +18,33 @@ class RaceEngine:
     }
     
     @staticmethod
-    def calcular_desgaste(uma: dict, fase: str) -> dict:
-        # Calcula desgaste según fase, inteligencia (reduce hasta 70%) y terreno
+    def calcular_desgaste(uma: dict, fase: str, terreno_carrera: str = None) -> dict:
+        # Calcula desgaste según fase, inteligencia (reduce hasta 70%) y compatibilidad de terreno
         fatiga = RaceEngine.FATIGA_BASE[fase].copy()
         inteligencia = uma['inteligencia']
-        terreno = uma['terreno']
+        terreno_favorito = uma['terreno']
+        
+        # Si no hay terreno de carrera especificado, asumir que es igual al favorito
+        if terreno_carrera is None:
+            terreno_carrera = terreno_favorito
+        
+        # Normalizar nombres de terreno para comparación
+        terreno_fav_norm = terreno_favorito.lower().replace('á', 'a')
+        terreno_carr_norm = terreno_carrera.lower().replace('á', 'a')
+        
+        # Calcular penalty/bonus de terreno
+        # Si coinciden: bonus (0.8x desgaste)
+        # Si no coinciden: penalty (1.2x desgaste)
+        terreno_multiplier = 0.8 if terreno_fav_norm == terreno_carr_norm else 1.2
         
         # Reducir desgaste según inteligencia (máximo 70% de reducción)
-        reduccion_inteligencia = min(0.7, inteligencia / 1428.57)  # 1000 * 0.7 / 1000 = máx 70%
+        reduccion_inteligencia = min(0.7, inteligencia / 1428.57)
         
         for stat in fatiga:
             desgaste = fatiga[stat] * (1 - reduccion_inteligencia)
             
-            # Terreno afecta poder
-            if stat == 'poder':
-                desgaste *= RaceEngine.TERRENO_BONUS.get(terreno, 1.0)
+            # Aplicar penalty/bonus de terreno
+            desgaste *= terreno_multiplier
             
             fatiga[stat] = max(0, int(desgaste))
         

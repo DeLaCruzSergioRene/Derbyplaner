@@ -2,15 +2,18 @@ import flet as ft
 from views.Seleccion import seleccion
 from views.Perfil import perfil
 from views.Acerca import acercaDe
+from views.Resultados import resultados
 
 # Menú principal con navegación entre secciones
-def menu(page: ft.Page, usuario):
+def menu(page: ft.Page, usuario=None):
 
     # Cambia la vista al navegar en la barra inferior
     def cambiar_vista(e):
         page.clean()
         if e.control.selected_index == 0:
             seleccion(page)
+        elif e.control.selected_index == 1:
+            resultados(page)
         elif e.control.selected_index == 2:
             page.add(perfil(page))
         elif e.control.selected_index == 3:

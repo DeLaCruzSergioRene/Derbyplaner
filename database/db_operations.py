@@ -143,20 +143,25 @@ def obtener_umas_usuario(user_id):
 
 
 def obtener_resultados_usuario(user_id):
-	# Obtiene todos los resultados de carreras de un usuario.
+	# Obtiene todos los resultados de carreras de un usuario (solo sus umas, no competidoras).
 	# Returns: list: Lista de dicts con resultados
 	
 	try:
 		bd = BD()
 		consulta = """
-		SELECT r.*, u.nombre, c.dist, c.terreno 
+		SELECT r.id, r.posicion, r.fecha, r.tiempo, u.nombre,
+		    c.dist, c.terreno,
+		    h1.nombre as hab_1, h2.nombre as hab_2, h3.nombre as hab_3
 		FROM resultados r
 		JOIN umas u ON r.uma_id = u.id
 		JOIN carreras c ON r.race_id = c.id
-		WHERE r.user_id = %s
+		LEFT JOIN habilidades h1 ON r.habilidad_1 = h1.id
+		LEFT JOIN habilidades h2 ON r.habilidad_2 = h2.id
+		LEFT JOIN habilidades h3 ON r.habilidad_3 = h3.id
+		WHERE r.user_id = %s AND u.user_id = %s
 		ORDER BY r.fecha DESC
 		"""
-		resultados = bd.obtener_todos(consulta, (user_id,))
+		resultados = bd.obtener_todos(consulta, (user_id, user_id))
 		bd.cerrar()
 		return resultados if resultados else []
 	except Exception as e:

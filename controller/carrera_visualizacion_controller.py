@@ -90,7 +90,7 @@ Terreno: {uma['terreno']}"""
 
 
 async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distancia: int, 
-							contador_tiempo, texto_fase, filas_umas: list, volver_callback):
+							contador_tiempo, texto_fase, filas_umas: list, volver_callback, terreno_carrera: str = None):
 	# Loop principal: cada tick actualiza velocidad, desgaste, habilidades e imagen
 	habilidades_count = {}
 	
@@ -101,12 +101,15 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 		# Actualizar cada uma
 		for idx in range(len(todas_umas)):
 			if simulacion.progreso[idx] >= distancia:
+				# Registrar tiempo de llegada cuando cruza la meta
+				if simulacion.tiempo_llegada[idx] is None:
+					simulacion.tiempo_llegada[idx] = simulacion.tiempo
 				continue
 			
 			uma = simulacion.umas[idx]
 			
 			# Aplicar desgaste y reducir stats (velocidad, stamina, poder)
-			desgaste = RaceEngine.calcular_desgaste(uma, fase)
+			desgaste = RaceEngine.calcular_desgaste(uma, fase, terreno_carrera)
 			uma['velocidad'] = max(0, uma['velocidad'] - desgaste['velocidad'])
 			uma['stamina'] = max(0, uma['stamina'] - desgaste['stamina'])
 			uma['poder'] = max(0, uma['poder'] - desgaste['poder'])
@@ -188,25 +191,26 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 	user_id = page.current_user.get('id')
 	carrera_id = page.current_user.get('carrera_id_bd')
 	
-	# Ordenar por tiempo de llegada
+	# Ordenar por tiempo de llegada y filtrar solo umas que terminaron
+	# Si alguna no terminó, mostrarla al final con DNF
 	posiciones = sorted(
-		simulacion.tiempo_llegada.items(),
-		key=lambda x: x[1] if x[1] is not None else float('inf')
+		[(idx, tiempo) for idx, tiempo in simulacion.tiempo_llegada.items()],
+		key=lambda x: (x[1] is None, x[1] if x[1] is not None else float('inf'))
 	)
 	
 	resultado_col = ft.Column([
-		ft.Text("RESULTADOS", size=28, weight="bold", color="#744BB1", text_align="center"),
-		ft.Divider(height=10, color="#E6C9F5"),
-	], spacing=10)
+		ft.Text("🏁 RESULTADOS 🏁", size=32, weight="bold", color="#744BB1", text_align="center"),
+		ft.Divider(height=15, color="#E6C9F5"),
+	], spacing=12)
 	
 	for lugar, (idx, tiempo_llegada) in enumerate(posiciones, 1):
 		uma = todas_umas[idx]
 		es_jugador = (idx == 0)
 		
-		medalla = ["🥇", "🥈", "🥉", "4º", "5º"][lugar - 1]
+		medalla = ["🥇", "🥈", "🥉", "4º", "5º"][min(lugar - 1, 4)]
 		color = "#E438AB" if es_jugador else "#B814CE"
 		
-		# Convertir tiempo a formato mm:ss
+		# Convertir tiempo a formato mm:ss o mostrar DNF
 		if tiempo_llegada is not None:
 			minutos = tiempo_llegada // 60
 			segundos = tiempo_llegada % 60
@@ -214,30 +218,39 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 		else:
 			tiempo_str = "DNF"
 		
+		# Destacar al jugador
+		bgcolor_item = "#FFE6F7" if es_jugador else "#F5E6FF"
+		border_color = "#E438AB" if es_jugador else "#B814CE"
+		
 		resultado_col.controls.append(
 			ft.Container(
-				content=ft.Row([
-					ft.Text(medalla, size=24),
-					ft.Text(f"{lugar}. {uma['label']}", size=16, weight="bold", color=color),
-					ft.Text(tiempo_str, size=14),
-				], spacing=15),
-				padding=10,
-				bgcolor="#F5E6FF",
-				border_radius=5,
+				content=ft.Container(
+					content=ft.Row([
+						ft.Text(medalla, size=32, weight="bold"),
+						ft.Text(f"{lugar}. {uma['label']}", size=18, weight="bold", color=color, expand=True),
+						ft.Text(tiempo_str, size=16, weight="bold", color="#744BB1"),
+					], spacing=20, alignment="space-between"),
+					padding=15,
+					bgcolor=bgcolor_item,
+					border_radius=8,
+				),
+				bgcolor=border_color,
+				border_radius=8,
+				padding=2,
 			)
 		)
 		
-		# Guardar resultado en BD
-		if user_id and carrera_id and tiempo_llegada is not None:
-			uma_id = page.current_user.get('uma_id_bd') if es_jugador else None
-			if uma_id or not es_jugador:
+		# Guardar resultado en BD (solo si terminó y es el jugador)
+		if user_id and carrera_id and tiempo_llegada is not None and es_jugador:
+			uma_id = page.current_user.get('uma_id_bd')
+			if uma_id:
 				habilidades = uma.get('habilidades', [])
-				guardar_resultado(user_id, carrera_id, uma_id or idx, lugar, tiempo_llegada, habilidades)
+				guardar_resultado(user_id, carrera_id, uma_id, lugar, tiempo_llegada, habilidades)
 	
-	resultado_col.controls.append(ft.Divider(height=10))
+	resultado_col.controls.append(ft.Divider(height=15, color="#E6C9F5"))
 	resultado_col.controls.append(
 		ft.Row([
-			ft.Button("Volver a Carreras", on_click=volver_callback),
+			ft.Button("Volver a Carreras", on_click=volver_callback, bgcolor="#744BB1", color="white", width=200, height=45),
 		], alignment="center")
 	)
 	
