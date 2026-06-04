@@ -5,9 +5,9 @@ class RaceEngine:
     
     # Desgaste de stats por fase de carrera (early/mid/late aumenta dificultad)
     FATIGA_BASE = {
-        'early': {'velocidad': 0.05, 'stamina': 0.05, 'poder': 0.05},
-        'mid': {'velocidad': 0.05, 'stamina': 0.1, 'poder': 0.05},
-        'late': {'velocidad': 0.1, 'stamina': 0.1, 'poder': 0.1}
+        'early': {'velocidad': 1, 'stamina': 1, 'poder': 1},
+        'mid': {'velocidad': 1.5, 'stamina': 1.7, 'poder': 1.6},
+        'late': {'velocidad': 2, 'stamina': 2.5, 'poder': 2.2}
     }
     
     # Bonificadores por terreno (afectan especialmente el poder)
@@ -52,10 +52,9 @@ class RaceEngine:
     
     @staticmethod
     def puede_activar_habilidad(tick: int, inteligencia: int) -> bool:
-        # Determina si una habilidad puede activarse en este tick. Solo se puede activar cada 50 ticks aproximadamente.
-        
-        # Intervalo base es 50 ticks
-        intervalo = max(30, 50 - inteligencia // 50)  # Inteligencia reduce el intervalo
+        # Determina si una habilidad puede activarse en este tick. Solo se puede activar cada 30 ticks aproximadamente.
+        # Intervalo base es 30 ticks.
+        intervalo = max(30, 30 - inteligencia // 30)  # Inteligencia reduce el intervalo
         
         # Probabilidad de activación en el momento correcto
         probabilidad = 0.3 + (inteligencia / 3333)  # Máx 0.6
