@@ -1,17 +1,16 @@
 import random
 
-
+# Motor de cálculos para la carrera: desgaste, habilidades, velocidad, terreno
 class RaceEngine:
-    """Motor de cálculos para la carrera."""
     
-    # Desgaste base por fase
+    # Desgaste de stats por fase de carrera (early/mid/late aumenta dificultad)
     FATIGA_BASE = {
         'early': {'velocidad': 0.05, 'stamina': 0.05, 'poder': 0.05},
         'mid': {'velocidad': 0.05, 'stamina': 0.1, 'poder': 0.05},
         'late': {'velocidad': 0.1, 'stamina': 0.1, 'poder': 0.1}
     }
     
-    # Bonificadores de terreno (afectan poder principalmente)
+    # Bonificadores por terreno (afectan especialmente el poder)
     TERRENO_BONUS = {
         'turf': 1.0,
         'dirt': 1.3,
@@ -20,15 +19,12 @@ class RaceEngine:
     
     @staticmethod
     def calcular_desgaste(uma: dict, fase: str) -> dict:
-        """
-        Calcula el desgaste de la uma en una fase.
-        Retorna {velocidad, stamina, poder} desgastados.
-        """
+        # Calcula desgaste según fase, inteligencia (reduce hasta 70%) y terreno
         fatiga = RaceEngine.FATIGA_BASE[fase].copy()
         inteligencia = uma['inteligencia']
         terreno = uma['terreno']
         
-        # Reducción por inteligencia (máx 70%)
+        # Reducir desgaste según inteligencia (máximo 70% de reducción)
         reduccion_inteligencia = min(0.7, inteligencia / 1428.57)  # 1000 * 0.7 / 1000 = máx 70%
         
         for stat in fatiga:

@@ -5,11 +5,11 @@ from controller.carrera_visualizacion_controller import (
 	crear_card_uma, ejecutar_carrera, MAPEO_UMA_ASSETS
 )
 
-
+# Vista principal del juego: muestra umas, setup de carrera y ejecuta la simulación
 def juego(page: ft.Page):
 	page.clean()
 	
-	# Obtener datos del juego desde el controlador
+	# Preparar datos: uma del jugador, 4 competidoras aleatorias y config de carrera
 	datos = preparar_datos_juego(page)
 	uma_seleccionada = datos['uma_seleccionada']
 	umas_competidoras = datos['umas_competidoras']
@@ -42,10 +42,13 @@ def juego(page: ft.Page):
 		# Inicia la carrera con animación.
 		page.clean()
 		
+		# Construir UI: simular carrera con todas las umas
 		todas_umas = [uma_seleccionada] + umas_competidoras
+		# Extraer distancia de string (ej: "2000m" -> 2000)
 		distancia_str = carrera_cfg.get('distancia', '2000m')
 		distancia = int(distancia_str.replace('m', ''))
 		
+		# Iniciar simulación del motor de carreras
 		simulacion = RaceSimulation(todas_umas, distancia)
 		
 		# Componentes UI
@@ -127,7 +130,6 @@ def juego(page: ft.Page):
 	], spacing=6, horizontal_alignment="center")
 
 	zona_juego = ft.Column([ft.Text("Presiona 'EMPEZAR JUEGO' para iniciar la carrera", size=16, color="#4A148C")], spacing=16, horizontal_alignment="center")
-
 	contenido_central = ft.Column([header, zona_juego], spacing=16, horizontal_alignment="center", expand=True, scroll="auto")
 
 	# Layout principal

@@ -104,11 +104,11 @@ class RaceSimulation:
 			return 'late'
 	
 	def _carrera_terminada(self) -> bool:
-		"""Verifica si la carrera terminó."""
+		# Verifica si la carrera terminó.
 		return all(prog >= self.distancia for prog in self.progreso.values())
 	
 	def get_progreso_actual(self) -> dict:
-		"""Retorna el progreso actual para visualización en tiempo real."""
+		# Retorna el progreso actual para visualización en tiempo real.
 		return {
 			'progreso': self.progreso,
 			'tiempo': self.tiempo,

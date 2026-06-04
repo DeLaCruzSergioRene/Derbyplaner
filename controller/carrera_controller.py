@@ -1,14 +1,17 @@
 import flet as ft
 from models.carrera_model import DISTANCIAS, TERRENOS, construir_carrera, resumen_creacion
 from models.creacion_model import get_uma_label
+from database.db_operations import guardar_carrera
 
-# Controlador para la vista de creación de carreras. Provee los controles (nombre, distancia, terreno) y muestra un mini-resumen de la `uma` seleccionada y la configuración de creación.
+# Controlador de carreras: configura distancia, terreno y guarda en BD para ejecutar la carrera
 def carrera(page: ft.Page):
+    # Cargar datos de la uma creada y la carrera actual (si existe)
     uma_img = page.current_user.get('uma_seleccionada', 'Air_Grove.png')
     uma_label = get_uma_label(uma_img)
     creacion_config = page.current_user.get('creacion', {})
     carrera_cfg = page.current_user.get('carrera')
 
+    # Campos para configurar la carrera (nombre, distancia, terreno)
     nombre_carrera = ft.TextField(
         label="Nombre de la carrera",
         width=300,
@@ -29,16 +32,24 @@ def carrera(page: ft.Page):
 
     def crear_nueva_carrera(e):
         try:
+            # Construir y validar la configuración de la carrera
             config = construir_carrera(
                 nombre_carrera.value,
                 distancia.value,
                 terreno.value,
             )
             page.current_user['carrera'] = config
+            
+            # Guardar carrera en BD
+            distancia_int = int(config['distancia'].replace('m', ''))
+            carrera_id = guardar_carrera(distancia_int, config['terreno'])
+            if carrera_id:
+                page.current_user['carrera_id_bd'] = carrera_id
+            
             estado_text.value = "Carrera creada y lista para jugar."
             page.snack_bar = ft.SnackBar(
-                ft.Text(f"Carrera '{config['nombre']}' creada", color="white"),
-                bgcolor="#744BB1"
+                ft.Text(f"Carrera '{config['nombre']}' creada en BD", color="white"),
+                bgcolor="#2E7D32"
             )
             page.snack_bar.open = True
             page.update()
@@ -49,7 +60,6 @@ def carrera(page: ft.Page):
             )
             page.snack_bar.open = True
             page.update()
-        # Nota: almacenamos la carrera en `page.current_user` para uso del usuario actual.
 
     def volver(e):
         page.clean()
@@ -70,6 +80,14 @@ def carrera(page: ft.Page):
                 )
                 page.current_user['carrera'] = config
                 carrera_cfg = config
+                
+                # Guardar en BD si no estaba
+                if 'carrera_id_bd' not in page.current_user:
+                    distancia_int = int(config['distancia'].replace('m', ''))
+                    carrera_id = guardar_carrera(distancia_int, config['terreno'])
+                    if carrera_id:
+                        page.current_user['carrera_id_bd'] = carrera_id
+                        
             except Exception:
                 page.snack_bar = ft.SnackBar(
                     ft.Text("No hay una carrera creada. Crea una carrera primero.", color="white"),
@@ -99,7 +117,7 @@ def carrera(page: ft.Page):
 
     estado_text = (
         f"Carrera '{carrera_cfg.get('nombre')}' creada y lista para jugar." if carrera_cfg else
-        "Aún no has creado la carrera, por favor elige la distancia, el terreno y si gustas un nombre. Luego, pulsa 'Crear carrera' primero."
+        "Aún no has creado la carrera, por favor elige la distancia, el terreno y si gustas un nombre personalizado. Luego, pulsa 'Crear carrera'."
     )
     estado_ui = ft.Text(estado_text, size=14, color="#4A148C")
 

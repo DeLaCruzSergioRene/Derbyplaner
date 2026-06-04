@@ -39,6 +39,17 @@ class BD:
             print(f"Error: {e}")
             return None
     
+    def obtener_todos(self, consulta, parametros=None):
+        try:
+            if parametros:
+                self.cursor.execute(consulta, parametros)
+            else:
+                self.cursor.execute(consulta)
+            return self.cursor.fetchall()
+        except Error as e:
+            print(f"Error: {e}")
+            return []
+    
     def cerrar(self):
         self.cursor.close()
         self.conexion.close()

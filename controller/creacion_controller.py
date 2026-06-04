@@ -5,17 +5,21 @@ from models.creacion_model import (
     get_uma_label,
     obtener_habilidades_seleccionadas,
 )
+from database.db_operations import guardar_uma_creada
 
-# Controlador para la vista de creación. Se encarga de construir los controles de UI (sliders, checkboxes) y de convertirlos en una configuración lista para guardar.
+# Controlador de creación de umas: configura stats, terreno y habilidades, luego guarda en BD
 def creacion(page: ft.Page):
+    # Cargar uma seleccionada previamente
     uma_img = page.current_user.get('uma_seleccionada', 'Air_Grove.png')
     uma_label = get_uma_label(uma_img)
 
+    # Sliders para los 4 stats principales (rango 0-1000)
     slider_vel = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_sta = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_pow = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
     slider_int = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
 
+    # Dropdown para seleccionar terreno favorito (afecta el rendimiento)
     terreno = ft.Dropdown(
         value="Pasto",
         options=[ft.dropdown.Option("Pasto"), ft.dropdown.Option("Tierra")],
@@ -23,6 +27,7 @@ def creacion(page: ft.Page):
         label="Terreno"
     )
 
+    # Dict para rastrear habilidades seleccionadas (máx 3)
     habilidades_seleccionadas = {}
 
     def limitar_habilidades(e):
@@ -65,6 +70,7 @@ def creacion(page: ft.Page):
         )
 
     def guardar_creacion(e):
+        # Construir config de la uma con todos los valores de UI
         habilidades = obtener_habilidades_seleccionadas(habilidades_seleccionadas)
         config = construir_configuracion(
             uma_img,
@@ -77,12 +83,39 @@ def creacion(page: ft.Page):
         )
 
         page.current_user['creacion'] = config
-        page.snack_bar = ft.SnackBar(
-            ft.Text(f"¡{uma_label} creado exitosamente!", color="white")
-        )
+        
+        # Guardar en BD si el usuario está autenticado
+        user_id = page.current_user.get('id', None)
+        if user_id:
+            config_para_bd = {
+                'uma': uma_img,
+                'label': uma_label,
+                'velocidad': slider_vel.value,
+                'stamina': slider_sta.value,
+                'poder': slider_pow.value,
+                'inteligencia': slider_int.value,
+                'terreno': terreno.value,
+                'habilidades': habilidades,
+            }
+            uma_id = guardar_uma_creada(user_id, config_para_bd)
+            if uma_id:
+                page.current_user['uma_id_bd'] = uma_id
+                page.snack_bar = ft.SnackBar(
+                    ft.Text(f"¡{uma_label} guardado en BD exitosamente!", color="white"),
+                    bgcolor="#2E7D32"
+                )
+            else:
+                page.snack_bar = ft.SnackBar(
+                    ft.Text(f"¡{uma_label} creado pero hubo error al guardar en BD!", color="white"),
+                    bgcolor="#F57C00"
+                )
+        else:
+            page.snack_bar = ft.SnackBar(
+                ft.Text(f"¡{uma_label} creado exitosamente!", color="white")
+            )
+        
         page.snack_bar.open = True
         page.update()
-        # Guardado completado; `page.current_user` se usa como almacenamiento para usuario actual.
 
     def crear_carrera(e):
         page.clean()

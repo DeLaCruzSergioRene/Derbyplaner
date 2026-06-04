@@ -2,6 +2,7 @@ import asyncio
 import random
 import flet as ft
 from models.race_engine_model import RaceEngine
+from database.db_operations import guardar_resultado
 
 # Mapeo de nombres de umas a nombres en assets
 MAPEO_UMA_ASSETS = {
@@ -90,7 +91,7 @@ Terreno: {uma['terreno']}"""
 
 async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distancia: int, 
 							contador_tiempo, texto_fase, filas_umas: list, volver_callback):
-	"""Ejecuta la carrera con animación."""
+	# Loop principal: cada tick actualiza velocidad, desgaste, habilidades e imagen
 	habilidades_count = {}
 	
 	while not simulacion._carrera_terminada():
@@ -104,23 +105,23 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 			
 			uma = simulacion.umas[idx]
 			
-			# Desgaste
+			# Aplicar desgaste y reducir stats (velocidad, stamina, poder)
 			desgaste = RaceEngine.calcular_desgaste(uma, fase)
 			uma['velocidad'] = max(0, uma['velocidad'] - desgaste['velocidad'])
 			uma['stamina'] = max(0, uma['stamina'] - desgaste['stamina'])
 			uma['poder'] = max(0, uma['poder'] - desgaste['poder'])
 			
-			# Velocidad y progreso
+			# Calcular velocidad base y avanzar progreso (70% velocidad + 30% stamina)
 			vel_base = (uma['velocidad'] * 0.7 + uma['stamina'] * 0.3) / 10
 			simulacion.progreso[idx] += vel_base
 			
-			# Habilidad - solo si no está usando skill actualmente
+			# Activar habilidad si cumple condiciones (no está en cooldown, tiene inteligencia suficiente)
 			if filas_umas[idx]['skill_timer'] == 0:
 				if RaceEngine.puede_activar_habilidad(simulacion.tick, uma['inteligencia']) and uma['habilidades']:
 					hab_idx = random.randint(0, len(uma['habilidades']) - 1)
 					habilidad = uma['habilidades'][hab_idx]
 					
-					# Contar activaciones por tipo de habilidad
+					# Limitar a 4 activaciones por habilidad en toda la carrera
 					if habilidad not in habilidades_count:
 						habilidades_count[habilidad] = 0
 					
@@ -183,6 +184,10 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 	"""Muestra los resultados finales de la carrera."""
 	page.clean()
 	
+	# Obtener datos de usuario y carrera
+	user_id = page.current_user.get('id')
+	carrera_id = page.current_user.get('carrera_id_bd')
+	
 	# Ordenar por tiempo de llegada
 	posiciones = sorted(
 		simulacion.tiempo_llegada.items(),
@@ -207,7 +212,7 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 			segundos = tiempo_llegada % 60
 			tiempo_str = f"{minutos:02d}:{segundos:02d}"
 		else:
-			tiempo_str = ""
+			tiempo_str = "DNF"
 		
 		resultado_col.controls.append(
 			ft.Container(
@@ -221,6 +226,13 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 				border_radius=5,
 			)
 		)
+		
+		# Guardar resultado en BD
+		if user_id and carrera_id and tiempo_llegada is not None:
+			uma_id = page.current_user.get('uma_id_bd') if es_jugador else None
+			if uma_id or not es_jugador:
+				habilidades = uma.get('habilidades', [])
+				guardar_resultado(user_id, carrera_id, uma_id or idx, lugar, tiempo_llegada, habilidades)
 	
 	resultado_col.controls.append(ft.Divider(height=10))
 	resultado_col.controls.append(

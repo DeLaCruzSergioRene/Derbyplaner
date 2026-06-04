@@ -3,13 +3,10 @@ from models.game_model import obtener_umas_competencia
 from models.creacion_model import get_uma_label
 
 def preparar_datos_juego(page: ft.Page):
-    """
-    Prepara los datos necesarios para la vista del juego.
-    Retorna un dict con:
-    - uma_seleccionada: dict con la uma elegida por el jugador
-    - umas_competidoras: list de 4 umas generadas aleatoriamente
-    - carrera: dict con info de la carrera
-    """
+    # Prepara los datos necesarios para la vista del juego. Retorna un dict con:
+    # - uma_seleccionada: dict con la uma elegida por el jugador
+    # - umas_competidoras: list de 4 umas generadas aleatoriamente
+    # - carrera: dict con info de la carrera
     creacion = page.current_user.get('creacion', {})
     uma_seleccionada_img = creacion.get('uma', 'Air_Grove.png')
     

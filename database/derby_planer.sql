@@ -158,7 +158,6 @@ CREATE TABLE IF NOT EXISTS `umas` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
 `user_id` int(11) DEFAULT NULL,
 `nombre` varchar(50) DEFAULT NULL,
-`estilo` varchar(20) DEFAULT NULL,
 `suelo_fav` varchar(20) DEFAULT NULL,
 `imagen` varchar(100) DEFAULT NULL,
 PRIMARY KEY (`id`),
