@@ -11,7 +11,7 @@ def acercaDe(page: ft.Page):
             ft.Text("Esto un projecto escolar solo con fines personales y educativos."),
             ft.Text("Umamusume es una marca registrada de Cygames."),
             ft.Text("El resto de recursos como imagenes y cualquier asset van con los derechos y creditos a sus respectivos creadores."),
-            ft.Image(src="assets\\img\\biw.jpg", width=400, height=500, fit="contain"),
+            ft.Image(src="assets\\img\\biw.jpg", width=500, height=500, fit="contain"),
         ], horizontal_alignment="center", spacing=12),
         padding=20,
         alignment=ft.alignment.Alignment(0, 0),
