@@ -168,3 +168,24 @@ def obtener_resultados_usuario(user_id):
 	except Exception as e:
 		print(f"Error obteniendo resultados: {e}")
 		return []
+
+
+def actualizar_contraseña_usuario(email: str, nueva_contraseña: str):
+	# Actualiza la contraseña del usuario en la BD
+	import bcrypt
+	try:
+		bd = BD()
+		
+		# Hashear la nueva contraseña con bcrypt (igual que en registro)
+		hash_pass = bcrypt.hashpw(nueva_contraseña.encode(), bcrypt.gensalt()).decode()
+		
+		bd.ejecutar(
+			"UPDATE usuarios SET password = %s WHERE email = %s",
+			(hash_pass, email)
+		)
+		bd.cerrar()
+		
+		return True
+	except Exception as e:
+		print(f"Error al actualizar contraseña: {e}")
+		return False

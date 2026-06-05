@@ -2,6 +2,7 @@ import flet as ft
 import bcrypt
 from database.db import BD
 from controller.auth_controller import validar_datos_sesion
+from views.Recuperar import recuperar
 
 class boton4(ft.Button):
     def init(self):
@@ -14,8 +15,10 @@ class boton4(ft.Button):
 def vista_sesion(page: ft.Page, al_exito):
     # Campos de entrada para iniciar sesión
     campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
-    campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
+    campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300, can_reveal_password=True)
     mensaje = ft.Text("", color="red")
+    def volver_a_sesion(e=None):
+        vista_sesion(page, al_exito)
     
     # Valida los datos del usuario y llama al callback de éxito si todo está bien
     def iniciar_sesion(e):

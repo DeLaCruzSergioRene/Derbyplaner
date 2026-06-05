@@ -16,7 +16,7 @@ def vista_registro(page: ft.Page, al_exito):
     # Campos para crear un nuevo usuario
     campo_nombre = ft.TextField(label="Nombre", width=300)
     campo_email = ft.TextField(keyboard_type=ft.KeyboardType.EMAIL, label="Correo", width=300)
-    campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300)
+    campo_contraseña = ft.TextField(label="Contraseña", password=True, width=300, can_reveal_password=True)
     mensaje = ft.Text("", color="red")
     
     # Procesa el formulario de registro y valida los datos ingresados
