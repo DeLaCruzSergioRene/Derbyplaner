@@ -1,4 +1,7 @@
-# Datos y utilidades para la pantalla de selección. Contiene la lista de umas disponibles y un helper para mostrar etiquetas legibles en la UI.
+# Datos y utilidades para la pantalla de selección.
+# - `UMAS` es una lista de nombres de archivo (strings) que representan las imágenes
+#   disponibles en `assets/umamusumes/`.
+# - Esta lista se itera para generar la UI; es un simple contenedor de identificadores.
 # Lista de imágenes (identificadores) disponibles en la selección.
 UMAS = [
     "Air_Grove.png", "El_Condor_Pasa.png", "Daiwa_Scarlet.png", "GoldShip.png",

@@ -9,6 +9,9 @@ def cargar_seleccion(page: ft.Page):
         from views.Creacion import creacion
         creacion(page)
 
+    # Se construye una lista de `buttons` usando una list comprehension.
+    # Nota: se usa `on_click=lambda e, u=uma: on_click_uma(e, u)` para fijar...
+    # El valor actual de `uma` en cada lambda.
     buttons = [
         ft.Container(
             content=ft.Column([

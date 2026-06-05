@@ -38,6 +38,8 @@ def guardar_uma_creada(user_id, config_uma):
 		
 		# Vincular habilidades seleccionadas a esta uma
 		habilidades = config_uma.get('habilidades', [])
+		# Para cada nombre de habilidad se busca su `id` y se inserta la relación
+		# en la tabla `uma_habs`. Esto mapea nombres legibles a IDs numéricos.
 		for hab_nombre in habilidades:
 			# Buscar ID de la habilidad en tabla habilidades
 			consulta_hab_id = "SELECT id FROM habilidades WHERE nombre = %s"

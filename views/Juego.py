@@ -43,6 +43,10 @@ def juego(page: ft.Page):
 		page.clean()
 		
 		# Construir UI: simular carrera con todas las umas
+		# Construir UI: simular carrera con todas las umas
+		# `todas_umas = [uma_seleccionada] + umas_competidoras` crea una
+		# nueva lista concatenando la uma del jugador con la lista de competidoras.
+		# (equivalente a `todas_umas = [] ; todas_umas.extend([uma_seleccionada]) ; todas_umas.extend(umas_competidoras)`)
 		todas_umas = [uma_seleccionada] + umas_competidoras
 		# Extraer distancia de string (ej: "2000m" -> 2000)
 		distancia_str = carrera_cfg.get('distancia', '2000m')
@@ -60,6 +64,8 @@ def juego(page: ft.Page):
 		for idx, uma in enumerate(todas_umas):
 			es_jugador = (idx == 0)
 			uma_asset_name = MAPEO_UMA_ASSETS.get(uma['uma'], uma['uma'].replace('.png', ''))
+						# `MAPEO_UMA_ASSETS` traduce el nombre de archivo a un prefijo
+						# usado por los sprites en `assets/Umascorriendo/`.
 			
 			img = ft.Image(src=f"assets/Umascorriendo/{uma_asset_name}corriendo.png", width=100, height=100, fit="contain")
 			barra = ft.ProgressBar(value=0, width=400, height=30, color="#E438AB" if es_jugador else "#B814CE")

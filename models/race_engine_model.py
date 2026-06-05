@@ -19,6 +19,7 @@ class RaceEngine:
     @staticmethod
     def calcular_desgaste(uma: dict, fase: str, terreno_carrera: str = None) -> dict:
         # Calcula desgaste según fase, inteligencia/poder (reducen) y compatibilidad de terreno
+        # Se usa `.copy()` para no modificar la constante `FATIGA_BASE` global.
         fatiga = RaceEngine.FATIGA_BASE[fase].copy()
         inteligencia = uma['inteligencia']
         poder = uma['poder']
@@ -56,9 +57,11 @@ class RaceEngine:
     def puede_activar_habilidad(tick: int, inteligencia: int) -> bool:
         # Determina si una habilidad puede activarse en este tick
         # Intervalo más corto: se puede activar cada 15-20 ticks
+        # `intervalo` controla cada cuantos ticks se puede intentar activar.
         intervalo = max(15, 20 - inteligencia // 50)  # Con inteligencia 1000: max(15, 20-20) = 15
-        
-        # Probabilidad: con inteligencia 1000 = 100% activación
+
+        # `probabilidad` es la probabilidad de activación (0.0-1.0).
+        # A mayor inteligencia, mayor probabilidad (1000 => 1.0)
         probabilidad = min(1.0, inteligencia / 1000)
         
         return (tick % intervalo == 0) and (random.random() < probabilidad)
@@ -82,6 +85,7 @@ class RaceEngine:
         habilidad = uma['habilidades'][habilidad_idx % len(uma['habilidades'])]
         
         # Mapear habilidad a tipo de stat basado en palabras clave
+        # (se revisan palabras clave en el nombre de la habilidad).
         tipo_stat = 'poder'  # default
         habilidad_lower = habilidad.lower()
         

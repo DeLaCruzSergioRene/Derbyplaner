@@ -93,7 +93,10 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 							contador_tiempo, texto_fase, filas_umas: list, volver_callback, terreno_carrera: str = None):
 	# Loop principal: cada tick actualiza velocidad, desgaste, habilidades e imagen
 	habilidades_count = {}
-	
+
+	# El bucle principal itera hasta que `_carrera_terminada()` devuelve True.
+	# Cada iteración incrementa `simulacion.tick` (contador de ticks) y luego espera 0.1 segundos (ver más abajo). El `tick` se usa para timing de...
+	# Activación de habilidades y animación.
 	while not simulacion._carrera_terminada():
 		simulacion.tick += 1
 		fase = simulacion._get_fase_actual()
@@ -177,6 +180,7 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 		
 		simulacion.tiempo += 1
 		page.update()
+		# Pausa entre ticks: 0.1s. Controla la frecuencia del loop y la animación.
 		await asyncio.sleep(0.1)
 	
 	# Mostrar resultados
