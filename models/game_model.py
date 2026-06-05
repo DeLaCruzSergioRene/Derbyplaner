@@ -3,16 +3,16 @@ from models.seleccion_model import UMAS
 from models.creacion_model import HABILIDADES, get_uma_label
 
 def generar_stats_aleatorios():
-    """Genera stats aleatorios para una uma competidora."""
+    # Genera stats aleatorios para una uma competidora.
     return {
-        'velocidad': random.randint(150, 1000),
-        'stamina': random.randint(150, 1000),
-        'poder': random.randint(150, 1000),
-        'inteligencia': random.randint(150, 1000),
+        'velocidad': random.randint(200, 1000),
+        'stamina': random.randint(200, 1000),
+        'poder': random.randint(250, 1000),
+        'inteligencia': random.randint(250, 1000),
     }
 
 def generar_habilidades_aleatorias():
-    """Genera entre 1 y 3 habilidades aleatorias."""
+    # Genera entre 1 y 3 habilidades aleatorias.
     todas_habilidades = []
     for tipo in HABILIDADES.values():
         todas_habilidades.extend(tipo)
@@ -21,7 +21,7 @@ def generar_habilidades_aleatorias():
     return random.sample(todas_habilidades, cantidad)
 
 def generar_uma_competidora(uma_excluida: str):
-    """Genera una uma competidora aleatoria (no puede ser la uma_excluida)."""
+    # Genera una uma competidora aleatoria (no puede ser la uma_excluida).
     umas_disponibles = [u for u in UMAS if u != uma_excluida]
     uma_img = random.choice(umas_disponibles)
     
@@ -37,7 +37,7 @@ def generar_uma_competidora(uma_excluida: str):
     }
 
 def obtener_umas_competencia(uma_excluida: str, cantidad: int = 4):
-    """Genera un número específico de umas competidoras únicas."""
+    # Genera un número específico de umas competidoras únicas.
     umas_competidoras = []
     umas_generadas = set()
     

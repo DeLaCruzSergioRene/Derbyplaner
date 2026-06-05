@@ -14,10 +14,10 @@ def creacion(page: ft.Page):
     uma_label = get_uma_label(uma_img)
 
     # Sliders para los 4 stats principales (rango 0-1000)
-    slider_vel = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
-    slider_sta = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
-    slider_pow = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
-    slider_int = ft.Slider(value=300, min=0, max=1000, divisions=20, label="{value}", width=300)
+    slider_vel = ft.Slider(value=300, min=200, max=1000, divisions=16, label="{value}", width=300)
+    slider_sta = ft.Slider(value=300, min=200, max=1000, divisions=16, label="{value}", width=300)
+    slider_pow = ft.Slider(value=300, min=200, max=1000, divisions=16, label="{value}", width=300)
+    slider_int = ft.Slider(value=300, min=200, max=1000, divisions=16, label="{value}", width=300)
 
     # Dropdown para seleccionar terreno favorito (afecta el rendimiento)
     terreno = ft.Dropdown(
