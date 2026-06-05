@@ -23,3 +23,8 @@ def validar_caracteres(nombre: str, permitido=r"^[\w\s\-áéíóúÁÉÍÓÚñÑ
     if not re.match(permitido, nombre or ""):
         return False, "Caracteres no permitidos"
     return True, ""
+
+def validar_longitud_nombre(nombre: str, minimo: int = 3):
+    if len(nombre or "") < minimo:
+        return False, f"El nombre debe tener al menos {minimo} caracteres"
+    return True, ""

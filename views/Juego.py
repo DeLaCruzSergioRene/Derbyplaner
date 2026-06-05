@@ -80,12 +80,33 @@ def juego(page: ft.Page):
 			
 			filas_umas.append({'row': fila, 'img': img, 'barra': barra, 'skill_text': skill_text, 'distancia_text': distancia_text, 'uma_asset_name': uma_asset_name, 'frame': 0, 'skill_timer': 0})
 		
+		# Layout: 2 arriba, 2 en medio, 1 abajo
+		fila_arriba = ft.Row(
+			[filas_umas[0]['row'], filas_umas[1]['row']] if len(filas_umas) > 1 else [filas_umas[0]['row']],
+			spacing=20,
+			alignment="center"
+		)
+		
+		fila_medio = ft.Row(
+			[filas_umas[2]['row'], filas_umas[3]['row']] if len(filas_umas) > 3 else [filas_umas[2]['row']] if len(filas_umas) > 2 else [],
+			spacing=20,
+			alignment="center"
+		)
+		
+		fila_abajo = ft.Row(
+			[filas_umas[4]['row']] if len(filas_umas) > 4 else [],
+			spacing=20,
+			alignment="center"
+		)
+		
 		# Layout
 		area_carrera = ft.Column([
 			ft.Column([contador_tiempo, texto_fase], spacing=5, horizontal_alignment="center"),
 			ft.Divider(height=10, color="#E6C9F5"),
-			ft.Column([fila['row'] for fila in filas_umas], spacing=15, expand=True, scroll="auto"),
-		], spacing=10, expand=True)
+			fila_arriba,
+			fila_medio,
+			fila_abajo,
+		], spacing=10, expand=True, horizontal_alignment="center")
 		
 		layout = ft.Column([
 			area_carrera,

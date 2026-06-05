@@ -30,7 +30,7 @@ MAPEO_UMA_ASSETS = {
 
 
 def crear_card_uma(uma: dict, es_seleccionada: bool = False) -> ft.Container:
-	"""Crea una tarjeta con la información de una uma."""
+	# Crea una tarjeta con la información de una uma.
 	color_borde = "#E438AB" if es_seleccionada else "#B814CE"
 	color_fondo = "#FFE6F7" if es_seleccionada else "#F5E6FF"
 	ancho = 220 if es_seleccionada else 180
@@ -114,8 +114,8 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 			uma['stamina'] = max(0, uma['stamina'] - desgaste['stamina'])
 			uma['poder'] = max(0, uma['poder'] - desgaste['poder'])
 			
-			# Calcular velocidad base y avanzar progreso (70% velocidad + 30% stamina)
-			vel_base = (uma['velocidad'] * 0.7 + uma['stamina'] * 0.3) / 10
+			# Calcular velocidad base y avanzar progreso usando RaceEngine
+			vel_base = RaceEngine.calcular_velocidad_fase(uma)
 			simulacion.progreso[idx] += vel_base
 			
 			# Activar habilidad si cumple condiciones (no está en cooldown, tiene inteligencia suficiente)
@@ -184,7 +184,7 @@ async def ejecutar_carrera(page: ft.Page, simulacion, todas_umas: list, distanci
 
 
 async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver_callback):
-	"""Muestra los resultados finales de la carrera."""
+	# Muestra los resultados finales de la carrera.
 	page.clean()
 	
 	# Obtener datos de usuario y carrera

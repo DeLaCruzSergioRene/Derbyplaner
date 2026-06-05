@@ -10,18 +10,18 @@ class RaceEngine:
         'late': {'velocidad': 2.2, 'stamina': 2.3, 'poder': 2.5}
     }
     
-    # Bonificadores por terreno (afectan especialmente el poder)
+    # Bonificadores por terreno (0.8 = buen rendimiento, 1.2 = mal rendimiento)
     TERRENO_BONUS = {
-        'turf': 1.0,
-        'dirt': 1.3,
-        'synthetic': 1.1
+        'pasto': 0.8,
+        'tierra': 1.1
     }
     
     @staticmethod
     def calcular_desgaste(uma: dict, fase: str, terreno_carrera: str = None) -> dict:
-        # Calcula desgaste según fase, inteligencia (reduce hasta 70%) y compatibilidad de terreno
+        # Calcula desgaste según fase, inteligencia/poder (reducen) y compatibilidad de terreno
         fatiga = RaceEngine.FATIGA_BASE[fase].copy()
         inteligencia = uma['inteligencia']
+        poder = uma['poder']
         terreno_favorito = uma['terreno']
         
         # Si no hay terreno de carrera especificado, asumir que es igual al favorito
@@ -32,32 +32,34 @@ class RaceEngine:
         terreno_fav_norm = terreno_favorito.lower().replace('á', 'a')
         terreno_carr_norm = terreno_carrera.lower().replace('á', 'a')
         
-        # Calcular penalty/bonus de terreno
-        # Si coinciden: bonus (0.8x desgaste)
-        # Si no coinciden: penalty (1.2x desgaste)
-        terreno_multiplier = 0.8 if terreno_fav_norm == terreno_carr_norm else 1.2
+        # Calcular multiplicador de terreno usando TERRENO_BONUS
+        terreno_multiplier = 1.0
+        if terreno_fav_norm == terreno_carr_norm:
+            terreno_multiplier = RaceEngine.TERRENO_BONUS.get(terreno_fav_norm, 1.0)
+        else:
+            # Si no coincide, penalty: 1.2x desgaste
+            terreno_multiplier = 1.2
         
-        # Reducir desgaste según inteligencia (máximo 70% de reducción)
-        reduccion_inteligencia = min(0.7, inteligencia / 1428.57)
+        # Reducción de desgaste: inteligencia (hasta 30%) + poder (hasta 40%)
+        reduccion_inteligencia = min(0.3, inteligencia / 3333)
+        reduccion_poder = min(0.4, poder / 2500)
+        reduccion_total = min(1.0, reduccion_inteligencia + reduccion_poder)
         
         for stat in fatiga:
-            desgaste = fatiga[stat] * (1 - reduccion_inteligencia)
-            
-            # Aplicar penalty/bonus de terreno
+            desgaste = fatiga[stat] * (1 - reduccion_total)
             desgaste *= terreno_multiplier
-            
             fatiga[stat] = max(0, int(desgaste))
         
         return fatiga
     
     @staticmethod
     def puede_activar_habilidad(tick: int, inteligencia: int) -> bool:
-        # Determina si una habilidad puede activarse en este tick. Solo se puede activar cada 30 ticks aproximadamente.
-        # Intervalo base es 30 ticks.
-        intervalo = max(30, 30 - inteligencia // 30)  # Inteligencia reduce el intervalo
+        # Determina si una habilidad puede activarse en este tick
+        # Intervalo más corto: se puede activar cada 15-20 ticks
+        intervalo = max(15, 20 - inteligencia // 50)  # Con inteligencia 1000: max(15, 20-20) = 15
         
-        # Probabilidad de activación en el momento correcto
-        probabilidad = 0.3 + (inteligencia / 3333)  # Máx 0.6
+        # Probabilidad: con inteligencia 1000 = 100% activación
+        probabilidad = min(1.0, inteligencia / 1000)
         
         return (tick % intervalo == 0) and (random.random() < probabilidad)
     
@@ -104,4 +106,4 @@ class RaceEngine:
         stamina = uma['stamina']
         
         # Velocidad base: velocidad contribuye más que stamina
-        return (velocidad * 0.7 + stamina * 0.3) / 10  # Dividir entre 10 en lugar de 100
+        return (velocidad * 0.7 + stamina * 0.3) / 20
