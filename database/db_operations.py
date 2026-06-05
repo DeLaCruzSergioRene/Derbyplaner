@@ -1,7 +1,6 @@
 # Operaciones de BD específicas para el juego Derby Planer.
 from database.db import BD
 
-
 def guardar_uma_creada(user_id, config_uma):
 	# Guarda una uma creada en la BD. Args: user_id: ID del usuario, config_uma: dict con {uma, label, velocidad, stamina, poder, inteligencia, terreno, habilidades}
 	# Returns: int: ID de la uma creada, o None si falla
