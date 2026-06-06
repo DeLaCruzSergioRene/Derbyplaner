@@ -1,6 +1,7 @@
 import flet as ft
 from models.game_model import obtener_umas_competencia
 from models.creacion_model import get_uma_label
+from database.db_operations import guardar_carrera
 
 def preparar_datos_juego(page: ft.Page):
     # Prepara los datos necesarios para la vista del juego. Retorna un dict con:
@@ -26,6 +27,16 @@ def preparar_datos_juego(page: ft.Page):
     umas_competidoras = obtener_umas_competencia(uma_seleccionada_img, cantidad=4)
     
     carrera = page.current_user.get('carrera', {})
+    
+    # Asegurar que carrera_id_bd esté guardada
+    if carrera and not page.current_user.get('carrera_id_bd'):
+        user_id = page.current_user.get('id')
+        if user_id:
+            distancia_str = carrera.get('distancia', '2000m')
+            distancia_int = int(distancia_str.replace('m', ''))
+            carrera_id = guardar_carrera(distancia_int, carrera.get('terreno', 'Pasto'))
+            if carrera_id:
+                page.current_user['carrera_id_bd'] = carrera_id
     
     return {
         'uma_seleccionada': uma_seleccionada,

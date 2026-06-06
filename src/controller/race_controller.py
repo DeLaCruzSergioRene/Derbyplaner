@@ -32,4 +32,8 @@ class RaceSimulation:
 	
 	def _carrera_terminada(self) -> bool:
 		# Verifica si la carrera terminó.
-		return all(prog >= self.distancia for prog in self.progreso.values())
+		# Termina si todas llegan, O si pasaron 150 segundos máximo (para no esperar infinito)
+		todas_llegaron = all(prog >= self.distancia for prog in self.progreso.values())
+		tiempo_maximo_excedido = self.tiempo >= 150
+		
+		return todas_llegaron or tiempo_maximo_excedido

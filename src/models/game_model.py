@@ -7,8 +7,8 @@ def generar_stats_aleatorios():
     return {
         'velocidad': random.randint(200, 1000),
         'stamina': random.randint(200, 1000),
-        'poder': random.randint(250, 1000),
-        'inteligencia': random.randint(250, 1000),
+        'poder': random.randint(300, 1000),
+        'inteligencia': random.randint(300, 1000),
     }
 
 def generar_habilidades_aleatorias():

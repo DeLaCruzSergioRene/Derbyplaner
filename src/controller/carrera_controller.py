@@ -46,9 +46,9 @@ def carrera(page: ft.Page):
             if carrera_id:
                 page.current_user['carrera_id_bd'] = carrera_id
             
-            estado_text.value = "Carrera creada y lista para jugar."
+            estado_ui.value = f"Carrera '{config['nombre']}' creada y lista para jugar."
             page.snack_bar = ft.SnackBar(
-                ft.Text(f"Carrera '{config['nombre']}' creada en BD", color="white"),
+                ft.Text(f"✓ Carrera '{config['nombre']}' creada exitosamente", color="white"),
                 bgcolor="#2E7D32"
             )
             page.snack_bar.open = True

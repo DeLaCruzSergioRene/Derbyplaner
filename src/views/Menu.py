@@ -4,7 +4,7 @@ from views.Perfil import perfil
 from views.Acerca import acercaDe
 from views.Resultados import resultados
 
-# Menú principal con navegación entre secciones
+# Menú principal con navegación entre secciones del menu
 def menu(page: ft.Page, usuario=None):
 
     # Cambia la vista al navegar en la barra inferior

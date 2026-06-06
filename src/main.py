@@ -86,6 +86,5 @@ def main(page: ft.Page):
             )
         )
     mostrar_menu()
-    
 
 ft.run(main)

@@ -29,6 +29,9 @@ def creacion(page: ft.Page):
 
     # Dict para rastrear habilidades seleccionadas (máx 3)
     habilidades_seleccionadas = {}
+    
+    # Elemento para mostrar mensaje de éxito
+    mensaje_ui = ft.Text("", size=14, color="#2E7D32", text_align="center", weight="bold")
 
     def limitar_habilidades(e):
         total = sum(1 for cb in habilidades_seleccionadas.values() if cb.value)
@@ -100,21 +103,8 @@ def creacion(page: ft.Page):
             uma_id = guardar_uma_creada(user_id, config_para_bd)
             if uma_id:
                 page.current_user['uma_id_bd'] = uma_id
-                page.snack_bar = ft.SnackBar(
-                    ft.Text(f"¡{uma_label} guardado en BD exitosamente!", color="white"),
-                    bgcolor="#2E7D32"
-                )
-            else:
-                page.snack_bar = ft.SnackBar(
-                    ft.Text(f"¡{uma_label} creado pero hubo error al guardar en BD!", color="white"),
-                    bgcolor="#F57C00"
-                )
-        else:
-            page.snack_bar = ft.SnackBar(
-                ft.Text(f"¡{uma_label} creado exitosamente!", color="white")
-            )
         
-        page.snack_bar.open = True
+        mensaje_ui.value = f"✓ ¡{uma_label} creada exitosamente!"
         page.update()
 
     def crear_carrera(e):
@@ -149,6 +139,7 @@ def creacion(page: ft.Page):
             ft.Button("Crear carrera", on_click=crear_carrera, bgcolor="#3D6AE3", color="white"),
             ft.Button("Volver", on_click=volver, bgcolor="#A0A0A0", color="white"),
         ], spacing=10, alignment="center"),
+        mensaje_ui,
     ], spacing=12, horizontal_alignment="center", scroll="auto")
 
     page.add(

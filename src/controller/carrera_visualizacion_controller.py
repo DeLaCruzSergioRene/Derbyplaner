@@ -244,10 +244,11 @@ async def mostrar_resultados(page: ft.Page, simulacion, todas_umas: list, volver
 			)
 		)
 		
-		# Guardar resultado en BD (solo si terminó y es el jugador)
-		if user_id and carrera_id and tiempo_llegada is not None and es_jugador:
+		# Guardar resultado en BD (incluso si es DNF o último lugar)
+		if user_id and carrera_id and es_jugador:
 			uma_id = page.current_user.get('uma_id_bd')
 			if uma_id:
+				# Si no llegó, guardar con tiempo_llegada = None (DNF)
 				habilidades = uma.get('habilidades', [])
 				guardar_resultado(user_id, carrera_id, uma_id, lugar, tiempo_llegada, habilidades)
 	

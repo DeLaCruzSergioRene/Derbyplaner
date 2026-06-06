@@ -53,11 +53,14 @@ def resultados(page: ft.Page):
 		else:
 			fecha_str = "N/A"
 		
-		# Convertir tiempo (segundos) a formato mm:ss
-		tiempo_segundos = res.get('tiempo', 0)
-		minutos = tiempo_segundos // 60
-		segundos = tiempo_segundos % 60
-		tiempo_str = f"{minutos:02d}:{segundos:02d}"
+		# Convertir tiempo (segundos) a formato mm:ss o mostrar DNF
+		tiempo_segundos = res.get('tiempo')
+		if tiempo_segundos is not None:
+			minutos = tiempo_segundos // 60
+			segundos = tiempo_segundos % 60
+			tiempo_str = f"{minutos:02d}:{segundos:02d}"
+		else:
+			tiempo_str = "DNF"
 		
 		# Obtener habilidades
 		habilidades = []
@@ -70,8 +73,14 @@ def resultados(page: ft.Page):
 		
 		# Medalla según posición
 		posicion = res.get('posicion', 0)
-		medalla_map = {1: "🥇", 2: "🥈", 3: "🥉"}
-		medalla = medalla_map.get(posicion, f"{posicion}º")
+		
+		# Generar medalla solo para 1º, 2º, 3º; para 4º y 5º solo número
+		if posicion <= 3:
+			medalla_map = {1: "🥇", 2: "🥈", 3: "🥉"}
+			medalla = medalla_map[posicion]
+			posicion_str = f"{medalla} {posicion}º"
+		else:
+			posicion_str = f"{posicion}º"
 		
 		# Color según posición
 		color_posicion = "#E438AB" if posicion == 1 else "#B814CE"
@@ -83,7 +92,7 @@ def resultados(page: ft.Page):
 					# Fila superior: ID, posición, fecha
 					ft.Row([
 						ft.Text(f"ID: {res.get('id')}", size=12, color="#744BB1", weight="bold"),
-						ft.Text(f"Posición: {medalla} {posicion}º", size=14, weight="bold", color=color_posicion, expand=True),
+						ft.Text(f"Posición: {posicion_str}", size=14, weight="bold", color=color_posicion, expand=True),
 						ft.Text(f"Fecha: {fecha_str}", size=12, color="#744BB1"),
 					], spacing=15, alignment="space-between"),
 					

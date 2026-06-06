@@ -88,6 +88,9 @@ def guardar_resultado(user_id, carrera_id, uma_id, posicion, tiempo_llegada, hab
 	# Returns: int: ID del resultado, o None si falla
 	
 	try:
+		if not user_id or not uma_id or not carrera_id:
+			return None
+		
 		bd = BD()
 		
 		# Mapear nombres de habilidades a sus IDs en la BD
@@ -124,7 +127,9 @@ def guardar_resultado(user_id, carrera_id, uma_id, posicion, tiempo_llegada, hab
 		return resultado_id
 		
 	except Exception as e:
-		print(f"Error guardando resultado: {e}")
+		print(f"ERROR guardando resultado: {e}")
+		import traceback
+		traceback.print_exc()
 		return None
 
 

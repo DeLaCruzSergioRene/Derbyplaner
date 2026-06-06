@@ -30,8 +30,26 @@ def vista_registro(page: ft.Page, al_exito):
             mensaje.value = f"✗ {msg}"
             page.update()
             return
-        # Si pasa la validación, se crea el usuario en la base de datos
         
+        # Verificar si el email ya existe en la BD
+        try:
+            bd = BD()
+            consulta = "SELECT id FROM usuarios WHERE email = %s"
+            resultado = bd.obtener_uno(consulta, (email,))
+            bd.cerrar()
+            
+            if resultado:
+                mensaje.value = "✗ Este email ya está registrado"
+                mensaje.color = "red"
+                page.update()
+                return
+        except Exception as ex:
+            mensaje.value = f"✗ Error al verificar email: {str(ex)[:40]}"
+            mensaje.color = "red"
+            page.update()
+            return
+        
+        # Si pasa la validación y email es único, se crea el usuario en la base de datos
         try:
             # Inserta el nuevo usuario en la base de datos con contraseña segura
             bd = BD()
@@ -48,6 +66,7 @@ def vista_registro(page: ft.Page, al_exito):
         except Exception as ex:
             # Muestra cualquier error que ocurra durante el registro
             mensaje.value = f"✗ {str(ex)[:40]}"
+            mensaje.color = "red"
             page.update()
     
     return ft.Container(

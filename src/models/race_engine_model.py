@@ -5,15 +5,15 @@ class RaceEngine:
     
     # Desgaste de stats por fase de carrera (early/mid/late aumenta dificultad)
     FATIGA_BASE = {
-        'early': {'velocidad': 1.4, 'stamina': 1.3, 'poder': 1.3},
-        'mid': {'velocidad': 1.8, 'stamina': 1.8, 'poder': 1.7},
-        'late': {'velocidad': 2.2, 'stamina': 2.3, 'poder': 2.5}
+        'early': {'velocidad': 1.4, 'stamina': 1.4, 'poder': 1.4},
+        'mid': {'velocidad': 1.7, 'stamina': 1.8, 'poder': 1.9},
+        'late': {'velocidad': 2.1, 'stamina': 2.2, 'poder': 2.4}
     }
     
-    # Bonificadores por terreno (0.8 = buen rendimiento, 1.2 = mal rendimiento)
+    # Bonificadores por terreno si es preferido por la uma (0.8 = buen rendimiento y menor desgaste, 1.2 = mal rendimiento y mas desgaste)
     TERRENO_BONUS = {
         'pasto': 0.8,
-        'tierra': 1.1
+        'tierra': 0.8
     }
     
     @staticmethod
